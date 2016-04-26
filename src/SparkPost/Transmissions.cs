@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -8,13 +7,11 @@ namespace SparkPost
 {
     public class Transmissions : ITransmissions
     {
-        private readonly Client client;
         private readonly RequestSender requestSender;
         private readonly DataMapper dataMapper;
 
-        public Transmissions(Client client, RequestSender requestSender, DataMapper dataMapper)
+        public Transmissions(RequestSender requestSender, DataMapper dataMapper)
         {
-            this.client = client;
             this.requestSender = requestSender;
             this.dataMapper = dataMapper;
         }
@@ -23,7 +20,7 @@ namespace SparkPost
         {
             var request = new Request
             {
-                Url = $"api/{client.Version}/transmissions",
+                Url = "transmissions",
                 Method = "POST",
                 Data = dataMapper.ToDictionary(transmission)
             };
@@ -47,7 +44,7 @@ namespace SparkPost
         {
             var request = new Request
             {
-                Url = $"api/{client.Version}/transmissions/" + transmissionId,
+                Url = $"transmissions/" + transmissionId,
                 Method = "GET",
             };
 
@@ -88,7 +85,7 @@ namespace SparkPost
         {
             var request = new Request
             {
-                Url = $"api/{client.Version}/transmissions",
+                Url = "transmissions",
                 Method = "GET",
             };
 

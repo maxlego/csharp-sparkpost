@@ -21,6 +21,9 @@ namespace SparkPost
         {
             using (var httpClient = client.CustomSettings.CreateANewHttpClient())
             {
+                if (request.Url.StartsWith("api") == false)
+                    request.Url = $"api/{client.Version}/{request.Url}";
+
                 httpClient.BaseAddress = new Uri(client.ApiHost);
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Add("Authorization", client.ApiKey);

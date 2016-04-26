@@ -9,7 +9,7 @@ namespace SparkPost
         {
             ApiKey = apiKey;
             ApiHost = apiHost;
-            Transmissions = new Transmissions(this, new RequestSender(this), new DataMapper(Version));
+            Transmissions = new Transmissions(new RequestSender(this), new DataMapper(Version));
             Suppressions = new Suppressions(this, new RequestSender(this), new DataMapper());
             Webhooks = new Webhooks(this, new RequestSender(this), new DataMapper());
             CustomSettings = new Settings();
