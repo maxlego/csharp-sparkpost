@@ -1,4 +1,6 @@
 git pull origin master
+git checkout -b experimenting origin/experimenting
+git pull origin experimenting
 
 nuget restore
 xbuild /p:Configuration=Release
