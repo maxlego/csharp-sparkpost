@@ -28,6 +28,8 @@ namespace SparkPost.Tests.RequestSenders
 
                 httpClient = new HttpClient();
 
+                Mocker.SetInstance(httpClient);
+
                 apiHost = "http://test.com";
                 apiKey = Guid.NewGuid().ToString();
 
@@ -131,7 +133,7 @@ namespace SparkPost.Tests.RequestSenders
             {
                 private Func<Request, HttpClient, HttpResponseMessage> responseBuilder;
 
-                public AsyncTesting(IClient client) : base(client, null)
+                public AsyncTesting(IClient client, Func<HttpClient> httpClient) : base(client, null, httpClient)
                 {
                 }
 

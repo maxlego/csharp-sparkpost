@@ -30,7 +30,7 @@ namespace SparkPost
             SubaccountId = subAccountId;
 
             var dataMapper = new DataMapper(Version);
-            var asyncRequestSender = new AsyncRequestSender(this, dataMapper);
+            var asyncRequestSender = new AsyncRequestSender(this, dataMapper, () => CustomSettings.CreateANewHttpClient());
             var syncRequestSender = new SyncRequestSender(asyncRequestSender);
             var requestSender = new RequestSender(asyncRequestSender, syncRequestSender, this);
 
