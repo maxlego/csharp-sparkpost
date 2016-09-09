@@ -7,6 +7,7 @@ namespace SparkPost
     public class Client : IClient
     {
         private const string defaultApiHost = "https://api.sparkpost.com";
+        private HttpClient httpClient;
 
         public Client(string apiKey) : this(apiKey, defaultApiHost, 0)
         {
@@ -33,7 +34,9 @@ namespace SparkPost
 
             Func<HttpClient> httpClientFactory = () =>
             {
-                var httpClient = CustomSettings.CreateANewHttpClient();
+                if (httpClient != null) return httpClient;
+
+                httpClient = CustomSettings.CreateANewHttpClient();
 
                 var preparation = new HttpClientPreparation(this);
                 preparation.Prepare(httpClient);
