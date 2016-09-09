@@ -21,8 +21,6 @@ namespace SparkPost.RequestSenders
         public virtual async Task<Response> Send(Request request)
         {
                 var httpClient = httpClientFactory();
-                var preparation = new HttpClientPreparation(client);
-                preparation.Prepare(httpClient);
 
                 var result = await GetTheResponse(request, httpClient);
 
