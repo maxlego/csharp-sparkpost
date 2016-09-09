@@ -9,18 +9,18 @@ namespace SparkPost.RequestSenders
     {
         private readonly IClient client;
         private readonly IDataMapper dataMapper;
-        private readonly Func<HttpClient> httpClientFactory;
+        private readonly Func<HttpClient> httpClientRetriever;
 
-        public AsyncRequestSender(IClient client, IDataMapper dataMapper, Func<HttpClient> httpClientFactory)
+        public AsyncRequestSender(IClient client, IDataMapper dataMapper, Func<HttpClient> httpClientRetriever)
         {
             this.client = client;
             this.dataMapper = dataMapper;
-            this.httpClientFactory = httpClientFactory;
+            this.httpClientRetriever = httpClientRetriever;
         }
 
         public virtual async Task<Response> Send(Request request)
         {
-                var httpClient = httpClientFactory();
+                var httpClient = httpClientRetriever();
 
                 var result = await GetTheResponse(request, httpClient);
 

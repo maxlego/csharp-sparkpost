@@ -32,7 +32,7 @@ namespace SparkPost
 
             var dataMapper = new DataMapper(Version);
 
-            Func<HttpClient> httpClientFactory = () =>
+            Func<HttpClient> httpClientRetriever = () =>
             {
                 if (httpClient != null) return httpClient;
 
@@ -44,7 +44,7 @@ namespace SparkPost
                 return httpClient;
             };
 
-            var asyncRequestSender = new AsyncRequestSender(this, dataMapper, httpClientFactory);
+            var asyncRequestSender = new AsyncRequestSender(this, dataMapper, httpClientRetriever);
             var syncRequestSender = new SyncRequestSender(asyncRequestSender);
             var requestSender = new RequestSender(asyncRequestSender, syncRequestSender, this);
 
