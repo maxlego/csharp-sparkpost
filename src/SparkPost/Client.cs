@@ -50,20 +50,6 @@ namespace SparkPost
             CustomSettings = new Settings();
         }
 
-        private Func<HttpClient> TheWayToGetTheHttpClient()
-        {
-            return () =>
-            {
-                if (HttpClient != null) return HttpClient;
-
-                HttpClient = CustomSettings.CreateANewHttpClient();
-
-                new HttpClientPreparation(this).Prepare(HttpClient);
-
-                return HttpClient;
-            };
-        }
-
         public string ApiKey { get; set; }
         public string ApiHost { get; set; }
         public long SubaccountId { get; set; }
@@ -109,5 +95,23 @@ namespace SparkPost
             }
         }
 
+        private Func<HttpClient> TheWayToGetTheHttpClient()
+        {
+            return () =>
+            {
+                if (HttpClient != null) return HttpClient;
+
+                HttpClient = BuildANewHttpClient();
+
+                return HttpClient;
+            };
+        }
+
+        private HttpClient BuildANewHttpClient()
+        {
+            var httpClient = CustomSettings.CreateANewHttpClient();
+            new HttpClientPreparation(this).Prepare(httpClient);
+            return httpClient;
+        }
     }
 }
