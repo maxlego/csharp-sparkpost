@@ -7,13 +7,11 @@ namespace SparkPost.RequestSenders
 {
     public class AsyncRequestSender : IRequestSender
     {
-        private readonly IClient client;
         private readonly IDataMapper dataMapper;
         private readonly Func<HttpClient> httpClientRetriever;
 
-        public AsyncRequestSender(IClient client, IDataMapper dataMapper, Func<HttpClient> httpClientRetriever)
+        public AsyncRequestSender(IDataMapper dataMapper, Func<HttpClient> httpClientRetriever)
         {
-            this.client = client;
             this.dataMapper = dataMapper;
             this.httpClientRetriever = httpClientRetriever;
         }

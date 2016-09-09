@@ -45,7 +45,7 @@ namespace SparkPost
                 return HttpClient;
             };
 
-            var asyncRequestSender = new AsyncRequestSender(this, dataMapper, httpClientRetriever);
+            var asyncRequestSender = new AsyncRequestSender(dataMapper, httpClientRetriever);
             var syncRequestSender = new SyncRequestSender(asyncRequestSender);
             var requestSender = new RequestSender(asyncRequestSender, syncRequestSender, this);
 
