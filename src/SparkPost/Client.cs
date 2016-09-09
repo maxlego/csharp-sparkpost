@@ -7,7 +7,8 @@ namespace SparkPost
     public class Client : IClient
     {
         private const string defaultApiHost = "https://api.sparkpost.com";
-        private HttpClient httpClient;
+
+        public HttpClient HttpClient { get; set; }
 
         public Client(string apiKey) : this(apiKey, defaultApiHost, 0)
         {
@@ -34,14 +35,14 @@ namespace SparkPost
 
             Func<HttpClient> httpClientRetriever = () =>
             {
-                if (httpClient != null) return httpClient;
+                if (HttpClient != null) return HttpClient;
 
-                httpClient = CustomSettings.CreateANewHttpClient();
+                HttpClient = CustomSettings.CreateANewHttpClient();
 
                 var preparation = new HttpClientPreparation(this);
-                preparation.Prepare(httpClient);
+                preparation.Prepare(HttpClient);
 
-                return httpClient;
+                return HttpClient;
             };
 
             var asyncRequestSender = new AsyncRequestSender(this, dataMapper, httpClientRetriever);
