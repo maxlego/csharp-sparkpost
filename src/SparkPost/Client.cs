@@ -33,19 +33,7 @@ namespace SparkPost
 
             var dataMapper = new DataMapper(Version);
 
-            Func<HttpClient> httpClientRetriever = () =>
-            {
-                if (HttpClient != null) return HttpClient;
-
-                HttpClient = CustomSettings.CreateANewHttpClient();
-
-                var preparation = new HttpClientPreparation(this);
-                preparation.Prepare(HttpClient);
-
-                return HttpClient;
-            };
-
-            var asyncRequestSender = new AsyncRequestSender(dataMapper, httpClientRetriever);
+            var asyncRequestSender = new AsyncRequestSender(dataMapper, TheWayToGetTheHttpClient());
             var syncRequestSender = new SyncRequestSender(asyncRequestSender);
             var requestSender = new RequestSender(asyncRequestSender, syncRequestSender, this);
 
@@ -60,6 +48,20 @@ namespace SparkPost
             RecipientLists = new RecipientLists(this, requestSender, dataMapper);
             Templates = new Templates(this, requestSender, dataMapper);
             CustomSettings = new Settings();
+        }
+
+        private Func<HttpClient> TheWayToGetTheHttpClient()
+        {
+            return () =>
+            {
+                if (HttpClient != null) return HttpClient;
+
+                HttpClient = CustomSettings.CreateANewHttpClient();
+
+                new HttpClientPreparation(this).Prepare(HttpClient);
+
+                return HttpClient;
+            };
         }
 
         public string ApiKey { get; set; }
