@@ -62,6 +62,7 @@
     <Compile Include="Dkim.cs" />
     <Compile Include="Dns.cs" />
     <Compile Include="GetSendingDomainResponse.cs" />
+    <Compile Include="HttpClientPreparation.cs" />
     <Compile Include="IMessageEvents.cs" />
     <Compile Include="IRecipientLists.cs" />
     <Compile Include="ISendingDomains.cs" />

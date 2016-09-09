@@ -21,7 +21,8 @@ namespace SparkPost.RequestSenders
         public virtual async Task<Response> Send(Request request)
         {
                 var httpClient = httpClientFactory();
-                PrepareTheHttpClient(httpClient, client);
+                var preparation = new HttpClientPreparation(client);
+                preparation.Prepare(httpClient);
 
                 var result = await GetTheResponse(request, httpClient);
 
@@ -31,16 +32,6 @@ namespace SparkPost.RequestSenders
                     ReasonPhrase = result.ReasonPhrase,
                     Content = await result.Content.ReadAsStringAsync()
                 };
-        }
-
-        private static void PrepareTheHttpClient(HttpClient httpClient, IClient client)
-        {
-            httpClient.BaseAddress = new Uri(client.ApiHost);
-            httpClient.DefaultRequestHeaders.Add("Authorization", client.ApiKey);
-
-            if (client.SubaccountId != 0)
-                httpClient.DefaultRequestHeaders.Add("X-MSYS-SUBACCOUNT",
-                    client.SubaccountId.ToString(CultureInfo.InvariantCulture));
         }
 
         protected virtual async Task<HttpResponseMessage> GetTheResponse(Request request, HttpClient httpClient)
