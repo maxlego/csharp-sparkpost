@@ -18,16 +18,14 @@ namespace SparkPost.RequestSenders
 
         public virtual async Task<Response> Send(Request request)
         {
-                var httpClient = httpClientRetriever();
+            var result = await GetTheResponse(request, httpClientRetriever());
 
-                var result = await GetTheResponse(request, httpClient);
-
-                return new Response
-                {
-                    StatusCode = result.StatusCode,
-                    ReasonPhrase = result.ReasonPhrase,
-                    Content = await result.Content.ReadAsStringAsync()
-                };
+            return new Response
+            {
+                StatusCode = result.StatusCode,
+                ReasonPhrase = result.ReasonPhrase,
+                Content = await result.Content.ReadAsStringAsync()
+            };
         }
 
         protected virtual async Task<HttpResponseMessage> GetTheResponse(Request request, HttpClient httpClient)
