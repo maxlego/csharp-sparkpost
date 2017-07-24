@@ -31,15 +31,5 @@ namespace SparkPost
         public int NumGenerated { get; set; }
         public int NumFailedGeneration { get; set; }
         public int NumInvalidRecipients { get; set; }
-
-        //public static Transmission Parse(MailMessage message)
-        //{
-        //    return MailMessageMapping.ToTransmission(message);
-        //}
-
-        //public void LoadFrom(MailMessage message)
-        //{
-        //    MailMessageMapping.ToTransmission(message, this);
-        //}
     }
 }
