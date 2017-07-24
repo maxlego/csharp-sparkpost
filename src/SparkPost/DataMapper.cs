@@ -223,8 +223,8 @@ namespace SparkPost
         {
             var converters = ToDictionaryMethods();
             if (converters.ContainsKey(anything.GetType()))
-                return converters[anything.GetType()].Invoke(this, BindingFlags.Default, null,
-                    new[] {anything}, CultureInfo.CurrentCulture) as IDictionary<string, object>;
+                return converters[anything.GetType()].Invoke(this,
+                    new[] {anything}) as IDictionary<string, object>;
             return WithCommonConventions(anything);
         }
 

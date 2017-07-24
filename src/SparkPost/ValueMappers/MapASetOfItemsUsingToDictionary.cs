@@ -32,8 +32,8 @@ namespace SparkPost.ValueMappers
             var list = (value as IEnumerable<object>).ToList();
 
             if (list.Any())
-                value = list.Select(x => converter.Invoke(dataMapper, BindingFlags.Default, null,
-                    new[] {x}, CultureInfo.CurrentCulture)).ToList();
+                value = list.Select(x => converter.Invoke(dataMapper,
+                    new[] {x})).ToList();
             else
                 value = null;
 
