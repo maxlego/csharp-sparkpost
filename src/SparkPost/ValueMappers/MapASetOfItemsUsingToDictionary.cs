@@ -21,13 +21,13 @@ namespace SparkPost.ValueMappers
         public bool CanMap(Type propertyType, object value)
         {
             return value != null && propertyType.Name.EndsWith("List`1") &&
-                   propertyType.GetGenericArguments().Count() == 1 &&
-                   converters.ContainsKey(propertyType.GetGenericArguments().First());
+                   propertyType.GetTypeInfo().GetGenericArguments().Count() == 1 &&
+                   converters.ContainsKey(propertyType.GetTypeInfo().GetGenericArguments().First());
         }
 
         public object Map(Type propertyType, object value)
         {
-            var converter = converters[propertyType.GetGenericArguments().First()];
+            var converter = converters[propertyType.GetTypeInfo().GetGenericArguments().First()];
 
             var list = (value as IEnumerable<object>).ToList();
 
