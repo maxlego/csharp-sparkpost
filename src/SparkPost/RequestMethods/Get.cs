@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using SparkPost.Utilities;
 
 namespace SparkPost.RequestMethods
