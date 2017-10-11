@@ -326,7 +326,13 @@ namespace SparkPost
         /// </summary>
         public string RemoteAddress { get; set; }
 
-        public override string ToString()
+		/// <summary>
+		/// Not documented.
+		/// "remote_addr": "http://www.domain.com",
+		/// </summary>
+		public string TargetLinkUrl { get; set; }
+
+		public override string ToString()
         {
             return $"{TypeEnum} from {FriendlyFrom} to {RecipientTo}";
         }

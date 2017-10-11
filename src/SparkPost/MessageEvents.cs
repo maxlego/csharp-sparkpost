@@ -135,8 +135,9 @@ namespace SparkPost
                     Transactional = result.transactional,
                     RemoteAddress = result.remote_addr,
                     Metadata = metadata,
-                    Tags = tags
-                });
+                    Tags = tags,
+					TargetLinkUrl = result.target_link_url
+				});
             }
             return messageEvents;
         }
