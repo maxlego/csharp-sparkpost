@@ -137,6 +137,10 @@ var client = new Client("MY_API_KEY");
 client.Suppressions.Retrieve("testing@testing.com");
 ```
 
+### Setting the API hostname
+```c#
+var client = new Client("MY_API_KEY", "https://api.eu.sparkpost.com");
+```
 
 ### Contribute
 
