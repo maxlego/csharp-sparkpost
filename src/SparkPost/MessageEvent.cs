@@ -326,10 +326,6 @@ namespace SparkPost
         /// </summary>
         public string RemoteAddress { get; set; }
 
-        /// <summary>
-        /// Not documented.
-        /// "remote_addr": "http://www.domain.com",
-        /// </summary>
         public string TargetLinkUrl { get; set; }
 
         public override string ToString()
