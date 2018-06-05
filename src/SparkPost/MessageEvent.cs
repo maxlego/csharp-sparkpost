@@ -326,6 +326,8 @@ namespace SparkPost
         /// </summary>
         public string RemoteAddress { get; set; }
 
+        public string TargetLinkUrl { get; set; }
+
         public override string ToString()
         {
             return $"{TypeEnum} from {FriendlyFrom} to {RecipientTo}";
