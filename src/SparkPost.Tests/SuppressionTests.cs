@@ -34,14 +34,14 @@ namespace SparkPost.Tests
             }
 
             [Test]
-            public async void It_should_return_true_if_the_web_request_returns_no_content()
+            public async Task It_should_return_true_if_the_web_request_returns_no_content()
             {
                 var result = await Subject.Delete(email);
                 result.ShouldBeTrue();
             }
 
             [Test]
-            public async void It_should_return_false_if_the_web_request_returns_anything_but_no_content()
+            public async Task It_should_return_false_if_the_web_request_returns_anything_but_no_content()
             {
                 response.StatusCode = HttpStatusCode.Accepted;
                 (await Subject.Delete(email)).ShouldBeFalse();
@@ -54,7 +54,7 @@ namespace SparkPost.Tests
             }
 
             [Test]
-            public async void It_should_build_the_web_request_parameters_correctly()
+            public async Task It_should_build_the_web_request_parameters_correctly()
             {
                 var version = Guid.NewGuid().ToString();
 
@@ -75,7 +75,7 @@ namespace SparkPost.Tests
             }
 
             [Test]
-            public async void It_should_encode_the_email_address()
+            public async Task It_should_encode_the_email_address()
             {
                 var version = Guid.NewGuid().ToString();
 
@@ -126,7 +126,7 @@ namespace SparkPost.Tests
             }
 
             [Test]
-            public async void It_should_return_a_response_when_the_web_request_is_ok()
+            public async Task It_should_return_a_response_when_the_web_request_is_ok()
             {
                 var result = await Subject.CreateOrUpdate(suppressions);
 
@@ -134,7 +134,7 @@ namespace SparkPost.Tests
             }
 
             [Test]
-            public async void It_should_return_the_reason_phrase()
+            public async Task It_should_return_the_reason_phrase()
             {
                 response.ReasonPhrase = Guid.NewGuid().ToString();
                 var result = await Subject.CreateOrUpdate(suppressions);
@@ -142,7 +142,7 @@ namespace SparkPost.Tests
             }
 
             [Test]
-            public async void It_should_return_the_content()
+            public async Task It_should_return_the_content()
             {
                 response.Content = Guid.NewGuid().ToString();
                 var result = await Subject.CreateOrUpdate(suppressions);
@@ -150,7 +150,7 @@ namespace SparkPost.Tests
             }
 
             [Test]
-            public async void It_should_make_a_properly_formed_request()
+            public async Task It_should_make_a_properly_formed_request()
             {
                 var client = Mocked<IClient>().Object;
                 Mocked<IClient>().Setup(x => x.Version).Returns(Guid.NewGuid().ToString());
@@ -167,7 +167,7 @@ namespace SparkPost.Tests
             }
 
             [Test]
-            public async void It_should_throw_if_the_http_status_code_is_not_ok()
+            public async Task It_should_throw_if_the_http_status_code_is_not_ok()
             {
                 response.StatusCode = HttpStatusCode.Accepted;
 

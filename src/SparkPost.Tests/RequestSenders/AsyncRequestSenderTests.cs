@@ -46,7 +46,7 @@ namespace SparkPost.Tests.RequestSenders
             }
 
             [Test]
-            public async void It_should_return_the_http_response_message_info()
+            public async Task It_should_return_the_http_response_message_info()
             {
                 var content = Guid.NewGuid().ToString();
                 Subject.SetupTheResponseWith((r, h) => new HttpResponseMessage(HttpStatusCode.Accepted)
@@ -60,7 +60,7 @@ namespace SparkPost.Tests.RequestSenders
             }
 
             [Test]
-            public async void It_should_return_the_http_response_message_info_take_2()
+            public async Task It_should_return_the_http_response_message_info_take_2()
             {
                 var content = Guid.NewGuid().ToString();
                 Subject.SetupTheResponseWith((r, h) => new HttpResponseMessage(HttpStatusCode.NotFound)
@@ -75,7 +75,7 @@ namespace SparkPost.Tests.RequestSenders
             }
 
             [Test]
-            public async void It_should_pass_the_api_key()
+            public async Task It_should_pass_the_api_key()
             {
                 Subject.SetupTheResponseWith((r, h) =>
                 {
@@ -87,7 +87,7 @@ namespace SparkPost.Tests.RequestSenders
             }
 
             [Test]
-            public async void It_should_send_the_request_to_the_appropriate_host()
+            public async Task It_should_send_the_request_to_the_appropriate_host()
             {
                 Subject.SetupTheResponseWith((r, h) =>
                 {
@@ -99,7 +99,7 @@ namespace SparkPost.Tests.RequestSenders
             }
 
             [Test]
-            public async void It_should_set_the_subaccount_when_the_subaccount_is_not_zero()
+            public async Task It_should_set_the_subaccount_when_the_subaccount_is_not_zero()
             {
                 Mocked<IClient>().Setup(x => x.SubaccountId).Returns(345);
                 Subject.SetupTheResponseWith((r, h) =>
@@ -114,7 +114,7 @@ namespace SparkPost.Tests.RequestSenders
             }
 
             [Test]
-            public async void It_should_NOT_set_a_subaccount_when_the_subaccount_is_zero()
+            public async Task It_should_NOT_set_a_subaccount_when_the_subaccount_is_zero()
             {
                 Mocked<IClient>().Setup(x => x.SubaccountId).Returns(0);
                 Subject.SetupTheResponseWith((r, h) =>
