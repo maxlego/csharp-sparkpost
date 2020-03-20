@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Web;
+using SparkPost.Utilities;
 
 namespace SparkPost
 {
@@ -25,7 +25,7 @@ namespace SparkPost
 
         public static T Create<T>(byte[] content) where T : File, new()
         {
-            return Create<T>(content, String.Empty);
+            return Create<T>(content, string.Empty);
         }
 
         public static T Create<T>(byte[] content, string name) where T : File, new()
@@ -34,7 +34,7 @@ namespace SparkPost
             if (content != null)
             {
                 result.Data = Convert.ToBase64String(content);
-                result.Type = MimeMapping.MimeUtility.GetMimeMapping(name);
+                result.Type = MimeMapping.GetContentType(name);
                 result.Name = name;
             }
             ;
@@ -43,7 +43,7 @@ namespace SparkPost
 
         public static T Create<T>(Stream content) where T : File, new()
         {
-            return Create<T>(content, String.Empty);
+            return Create<T>(content, string.Empty);
         }
 
         public static T Create<T>(Stream content, string name) where T : File, new()

@@ -35,14 +35,14 @@ namespace SparkPost.Tests
                 email = Guid.NewGuid().ToString();
             }
 
-            [Fact]
+            [Test]
             public async Task It_should_return_true_if_the_web_request_returns_no_content()
             {
                 var result = await suppressions.Delete(email);
                 Assert.True(result);
             }
 
-            [Fact]
+            [Test]
             public async Task It_should_return_false_if_the_web_request_returns_anything_but_no_content()
             {
                 response.StatusCode = HttpStatusCode.Accepted;
@@ -58,7 +58,7 @@ namespace SparkPost.Tests
                 Assert.False(deleted);
             }
 
-            [Fact]
+            [Test]
             public async Task It_should_build_the_web_request_parameters_correctly()
             {
                 var version = Guid.NewGuid().ToString();
@@ -79,7 +79,7 @@ namespace SparkPost.Tests
                 await suppressions.Delete(email);
             }
 
-            [Fact]
+            [Test]
             public async Task It_should_encode_the_email_address()
             {
                 var version = Guid.NewGuid().ToString();
@@ -127,14 +127,14 @@ namespace SparkPost.Tests
                 suppressions = new Suppressions(client.Object, requestSender.Object, dataMapper.Object);
             }
 
-            [Fact]
+            [Test]
             public async Task It_should_return_a_response_when_the_web_request_is_ok()
             {
                 var result = await suppressions.CreateOrUpdate(suppressionsList);
                 Assert.NotNull(result);
             }
 
-            [Fact]
+            [Test]
             public async Task It_should_return_the_reason_phrase()
             {
                 response.ReasonPhrase = Guid.NewGuid().ToString();
@@ -142,7 +142,7 @@ namespace SparkPost.Tests
                 Assert.Equal(response.ReasonPhrase, result.ReasonPhrase);
             }
 
-            [Fact]
+            [Test]
             public async Task It_should_return_the_content()
             {
                 response.Content = Guid.NewGuid().ToString();
@@ -150,7 +150,7 @@ namespace SparkPost.Tests
                 Assert.Equal(response.Content, result.Content);
             }
 
-            [Fact]
+            [Test]
             public async Task It_should_make_a_properly_formed_request()
             {
                 client.Setup(x => x.Version).Returns(Guid.NewGuid().ToString());
@@ -168,7 +168,7 @@ namespace SparkPost.Tests
                 await suppressions.CreateOrUpdate(suppressionsList);
             }
 
-            [Fact]
+            [Test]
             public async Task It_should_throw_if_the_http_status_code_is_not_ok()
             {
                 response.StatusCode = HttpStatusCode.Accepted;

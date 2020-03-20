@@ -1,33 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <AssemblyTitle>SparkPost</AssemblyTitle>
-    <Company>SparkPost</Company>
-    <Product>SparkPost</Product>
-    <Description>SparkPost API</Description>
-    <Copyright>Copyright 2022</Copyright>
-    <Version>2.0.2</Version>
-    <AssemblyVersion>2.0.2</AssemblyVersion>
-    <FileVersion>2.0.2</FileVersion>
-    <Authors>Darren Cauthon; Adam Hathcock</Authors>
-    <icon>https://www.sparkpost.com/sites/default/files/attachments/SparkPost_Logo_2-Color_Gray-Orange_RGB.svg</icon>
-    <PackageId>SparkPost</PackageId>
-    <license>https://github.com/darrencauthon/csharp-sparkpost/blob/master/LICENSE.md</license>
-    <PackageProjectUrl>https://github.com/SparkPost/csharp-sparkpost</PackageProjectUrl>
-    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-    <PackageReleaseNotes>Added support to pass a user-agent.</PackageReleaseNotes>
-    <PackageTags>email</PackageTags>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>10</LangVersion>
+    <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
+    <Version>1.14.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>SparkPost.NetCore</PackageId>
+    <Description>Lean Sparkpost API client port to .net standard 2.0</Description>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/maxlego/csharp-sparkpost</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/maxlego/csharp-sparkpost</RepositoryUrl>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="MimeMapping" Version="1.0.1.37" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="">
-      <Link>LICENSE.md</Link>
-    </None>
+    <Folder Include="Properties\" />
   </ItemGroup>
+
 </Project>

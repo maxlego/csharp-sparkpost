@@ -1,7 +1,5 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using System.Web;
-using Microsoft.AspNetCore.WebUtilities;
 using SparkPost.RequestSenders;
 using SparkPost.Utilities;
 
@@ -109,7 +107,7 @@ namespace SparkPost
             if (response.StatusCode == HttpStatusCode.NoContent)
             {
                 response.StatusCode = HttpStatusCode.OK;
-                response.ReasonPhrase = ReasonPhrases.GetReasonPhrase((int)HttpStatusCode.OK);
+                response.ReasonPhrase = nameof(HttpStatusCode.OK);
             }
 
             if (response.StatusCode != HttpStatusCode.OK)
