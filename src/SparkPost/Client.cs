@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Net.Http;
 using SparkPost.RequestSenders;
@@ -45,9 +44,11 @@ namespace SparkPost
             MessageEvents = new MessageEvents(this, requestSender);
             InboundDomains = new InboundDomains(this, requestSender, dataMapper);
             RelayWebhooks = new RelayWebhooks(this, requestSender, dataMapper);
+            RecipientValidations = new RecipientValidation(this, requestSender);
             RecipientLists = new RecipientLists(this, requestSender, dataMapper);
             Templates = new Templates(this, requestSender, dataMapper);
             Metrics = new Metrics(this, requestSender);
+            Events = new Events(this, requestSender);
             CustomSettings = new Settings();
         }
 
@@ -65,7 +66,11 @@ namespace SparkPost
         public IRelayWebhooks RelayWebhooks { get; }
         public IRecipientLists RecipientLists { get; }
         public ITemplates Templates { get; }
-        public IMetrics Metrics { get; } 
+        public IMetrics Metrics { get; }
+
+        public IRecipientValidation RecipientValidations { get; }
+
+        public Events Events { get; }
         public string Version => "v1";
 
         public Settings CustomSettings { get; }
