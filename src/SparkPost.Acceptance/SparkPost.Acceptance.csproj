@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp6.0;net462</TargetFrameworks>
+    <TargetFramework>netcoreapp6.0</TargetFramework>
     <AssemblyName>SparkPost.Acceptance</AssemblyName>
   </PropertyGroup>
   <ItemGroup>

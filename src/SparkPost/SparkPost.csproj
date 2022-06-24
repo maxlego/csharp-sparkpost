@@ -15,7 +15,7 @@
     <PackageReleaseNotes>Added support to pass a user-agent.</PackageReleaseNotes>
     <PackageTags>email</PackageTags>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-    <TargetFrameworks>net462;netstandard2.0</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>10</LangVersion>
   </PropertyGroup>
   <ItemGroup>
