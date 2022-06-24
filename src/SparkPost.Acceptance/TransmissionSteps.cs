@@ -97,14 +97,12 @@ namespace SparkPost.Acceptance
         }
 
         [When(@"I send the transmission")]
-        public void WhenISendTheTransmission()
+        public async Task WhenISendTheTransmission()
         {
             var client = scenarioContext.Get<IClient>();
             var transmission = scenarioContext.Get<Transmission>();
 
-            SendTransmissionResponse response = null;
-
-            Task.Run(async () => { response = await client.Transmissions.Send(transmission); }).Wait();
+            SendTransmissionResponse response = await client.Transmissions.Send(transmission);
 
             scenarioContext.Set(response);
             scenarioContext.Set<Response>(response);

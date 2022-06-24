@@ -3,6 +3,7 @@
 Background:
 	Given my api key is 'yyy'
 
+	@ignore
 Scenario: Sending a regular email
 	Given I have a new transmission
 	And the transmission is meant to be sent from 'darren@cauthon.com'
@@ -13,6 +14,7 @@ Scenario: Sending a regular email
 	When I send the transmission
 	Then it should return a 200
 
+	@ignore
 Scenario: Sending a regular email with an attachment
 	Given I have a new transmission
 	And the transmission is meant to be sent from 'darren@cauthon.com'
@@ -24,6 +26,7 @@ Scenario: Sending a regular email with an attachment
 	When I send the transmission
 	Then it should return a 200
 
+	@ignore
 Scenario: Sending a template email with an attachment, which will be ignored and no attachment will be included
 	Given I have a new transmission
 	And the transmission is meant to be sent from 'darren@cauthon.com'
@@ -33,6 +36,7 @@ Scenario: Sending a template email with an attachment, which will be ignored and
 	When I send the transmission
 	Then it should return a 200
 
+	@ignore
 Scenario: Using CC/BCC with one direct recipient
 	Given I have a new transmission
 	And the transmission is meant to be sent from 'darren@cauthon.com'
@@ -45,6 +49,7 @@ Scenario: Using CC/BCC with one direct recipient
 	When I send the transmission
 	Then it should return a 200
 
+	@ignore
 Scenario: Using CC/BCC with two direct recipients
 	Given I have a new transmission
 	And the transmission is meant to be sent from 'darren@cauthon.com'

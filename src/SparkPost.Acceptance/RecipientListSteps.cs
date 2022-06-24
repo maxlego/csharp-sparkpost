@@ -45,47 +45,36 @@ namespace SparkPost.Acceptance
         }
 
         [When(@"I create the recipient list")]
-        public void WhenICreateTheRecipientList()
+        public async Task WhenICreateTheRecipientList()
         {
             var recipientList = scenarioContext.Get<RecipientList>();
 
             var client = scenarioContext.Get<IClient>();
 
-            SendRecipientListsResponse response = null;
-            Task.Run(async () => { response = await client.RecipientLists.Create(recipientList); }).Wait();
+            SendRecipientListsResponse response = await client.RecipientLists.Create(recipientList);
 
             scenarioContext.Set(response);
             scenarioContext.Set<Response>(response);
         }
 
         [When(@"I retrieve the ""(.*)"" recipient list")]
-        public void WhenIRetrieveTheRecipientList(string key)
+        public async Task WhenIRetrieveTheRecipientList(string key)
         {
             var client = scenarioContext.Get<IClient>();
 
-            RetrieveRecipientListsResponse response = null;
-
-            Task.Run(async () =>
-            {
-                response = await client.RecipientLists.Retrieve(key);
-            }).Wait();
+            RetrieveRecipientListsResponse response = await client.RecipientLists.Retrieve(key);
 
             scenarioContext.Set(response.RecipientList);
         }
 
         [When(@"I update the recipient list")]
-        public void WhenIUpdateTheRecipientList()
+        public async Task WhenIUpdateTheRecipientList()
         {
             var recipientList = scenarioContext.Get<RecipientList>();
 
             var client = scenarioContext.Get<IClient>();
 
-            UpdateRecipientListResponse response = null;
-
-            Task.Run(async () =>
-            {
-                response = await client.RecipientLists.Update(recipientList);
-            }).Wait();
+            UpdateRecipientListResponse response = await client.RecipientLists.Update(recipientList);
 
             scenarioContext.Set(response);
         }

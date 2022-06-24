@@ -11,13 +11,11 @@ namespace SparkPost.RequestSenders
             this.requestSender = requestSender;
         }
 
-        public virtual Task<Response> Send(Request request)
+        public virtual async Task<Response> Send(Request request)
         {
-            Response response = null;
+            Response response = await requestSender.Send(request);
 
-            Task.Run(async () => { response = await requestSender.Send(request); }).Wait();
-
-            return Task.FromResult(response);
+            return response;
         }
     }
 }

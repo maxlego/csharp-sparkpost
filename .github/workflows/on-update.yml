@@ -12,6 +12,6 @@ jobs:
         with:
           dotnet-version: 6.0.301
       - name: build
-        run: dotnet build
+        run: dotnet build src/SparkPost.sln 
       - name: Run Tests
-        run: dotnet test
+        run: dotnet test src/SparkPost.sln

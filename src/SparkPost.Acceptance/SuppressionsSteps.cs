@@ -23,15 +23,13 @@ namespace SparkPost.Acceptance
         }
 
         [When(@"I add my random email address a to my suppressions list")]
-        public void WhenIAddToMySuppressionsList()
+        public async Task WhenIAddToMySuppressionsList()
         {
             var email = scenarioContext["randomemail"] as string;
 
             var client = scenarioContext.Get<IClient>();
 
-            UpdateSuppressionResponse response = null;
-
-            Task.Run(async () => { response = await client.Suppressions.CreateOrUpdate(new [] {email}); }).Wait();
+            UpdateSuppressionResponse response =  await client.Suppressions.CreateOrUpdate(new [] {email});
 
             scenarioContext.Set(response);
             scenarioContext.Set<Response>(response);

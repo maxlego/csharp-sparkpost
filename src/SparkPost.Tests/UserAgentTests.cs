@@ -17,7 +17,7 @@ namespace SparkPost.Tests
             [Fact]
             public void It_should_default_to_the_library_version()
             {
-                Assert.Equal($"csharp-sparkpost/1.15.0", settings.UserAgent);
+                Assert.Equal($"csharp-sparkpost/2.0.0", settings.UserAgent);
             }
 
             [Fact]

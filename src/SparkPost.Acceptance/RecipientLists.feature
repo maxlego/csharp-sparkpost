@@ -3,6 +3,7 @@
 Background:
 	Given my api key is 'yyy'
 
+	@ignore
 Scenario: Retrieving a recipient list
 	Given I do not have a recipient list of id 'test-name'
 	And I have a new recipient list as
@@ -21,6 +22,7 @@ Scenario: Retrieving a recipient list
 	| Id        | Name      | Description      |
 	| test-name | Test Name | Test Description |
 
+	@ignore
 Scenario: Creating a recipient list
 	Given I do not have a recipient list of id 'test-name'
 	And I have a new recipient list as
@@ -34,6 +36,7 @@ Scenario: Creating a recipient list
 	| Email          |
 	| test@test.com  |
 
+	@ignore
 Scenario: Updating a recipient list
 	Given I do not have a recipient list of id 'test-name'
 	And I have a new recipient list as

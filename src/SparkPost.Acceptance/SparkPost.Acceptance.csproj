@@ -1,12 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp6.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>SparkPost.Acceptance</AssemblyName>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="SpecFlow.xUnit" Version="3.9.74" />
     <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.9.74" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5"/>
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.9.74" /> 
     <ProjectReference Include="..\SparkPost\SparkPost.csproj" />
   </ItemGroup>
   <ItemGroup>

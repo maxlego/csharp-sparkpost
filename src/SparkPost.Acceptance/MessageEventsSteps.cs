@@ -6,17 +6,22 @@ namespace SparkPost.Acceptance
     [Binding]
     public class MessageEventsSteps
     {
-        [When(@"I ask for samples of '(.*)'")]
-        public void WhenIAskForSamplesOf(string events)
+        private readonly ScenarioContext _scenarioContext;
+
+        public MessageEventsSteps(ScenarioContext scenarioContext)
         {
-            var client = ScenarioContext.Current.Get<IClient>();
+            _scenarioContext = scenarioContext;
+        }
 
-            MessageEventSampleResponse response = null;
+        [When(@"I ask for samples of '(.*)'")]
+        public async Task WhenIAskForSamplesOf(string events)
+        {
+            var client = _scenarioContext.Get<IClient>();
 
-            Task.Run(async () => { response = await client.MessageEvents.SamplesOf(events); }).Wait();
+            MessageEventSampleResponse response = await client.MessageEvents.SamplesOf(events); 
 
-            ScenarioContext.Current.Set(response);
-            ScenarioContext.Current.Set<Response>(response);
+            _scenarioContext.Set(response);
+            _scenarioContext.Set<Response>(response);
         }
     }
 }
