@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using Should;
 using TechTalk.SpecFlow;
+using Xunit;
 
 namespace SparkPost.Acceptance
 {
@@ -39,7 +38,7 @@ namespace SparkPost.Acceptance
         }
 
         [Then(@"my random email address should be on my suppressions list")]
-        public void ThenShouldBeOnMySuppressionsList()
+        public async Task ThenShouldBeOnMySuppressionsList()
         {
             var email = scenarioContext["randomemail"] as string;
 
@@ -47,13 +46,8 @@ namespace SparkPost.Acceptance
 
             ListSuppressionResponse response = null;
 
-            Thread.Sleep(30000);
-
-            Task.Run(async () =>
-            {
-                response = await client.Suppressions.Retrieve(email);
-                response.Suppressions.Count().ShouldBeGreaterThan(0);
-            }).Wait();
+            response = await client.Suppressions.Retrieve(email);
+            Assert.True(response.Suppressions.Any());
 
         }
     }

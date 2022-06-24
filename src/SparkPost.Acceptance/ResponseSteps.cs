@@ -1,5 +1,5 @@
-﻿using Should;
-using TechTalk.SpecFlow;
+﻿using TechTalk.SpecFlow;
+using Xunit;
 
 namespace SparkPost.Acceptance
 {
@@ -10,7 +10,7 @@ namespace SparkPost.Acceptance
         public void ThenItShouldReturnA(int statusCode)
         {
             var response = ScenarioContext.Current.Get<Response>();
-            response.StatusCode.GetHashCode().ShouldEqual(statusCode);
+             Assert.Equal(statusCode, response.StatusCode.GetHashCode());
         }
     }
 }

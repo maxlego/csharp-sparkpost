@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Should;
 using TechTalk.SpecFlow;
+using Xunit;
 
 namespace SparkPost.Acceptance
 {
@@ -45,7 +45,7 @@ namespace SparkPost.Acceptance
         public void x()
         {
             var response = ScenarioContext.Current.Get<Response>();
-            response.ShouldBeType(typeof(GetMetricsResponse));
+            Assert.IsType<GetMetricsResponse>(response);
         }
     }
 }
