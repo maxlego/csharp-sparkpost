@@ -11,7 +11,9 @@ namespace SparkPost.Tests.RequestSenders
 {
     public class AsyncRequestSenderTests
     {
+#pragma warning disable CA1001
         public class SendTests
+#pragma warning restore CA1001
         {
             private readonly Request request;
             private readonly string apiHost;
@@ -21,7 +23,7 @@ namespace SparkPost.Tests.RequestSenders
             private readonly Mock<IClient> client;
 
             public SendTests()
-            { 
+            {
                 var httpClient = new HttpClient();
                 apiHost = "http://test.com";
                 apiKey = Guid.NewGuid().ToString();

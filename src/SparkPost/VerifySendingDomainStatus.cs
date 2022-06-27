@@ -20,7 +20,7 @@ namespace SparkPost
                     AbuseAtStatus = Enum.Parse(typeof(AbuseAtStatus), (result.abuse_at_status ?? AbuseAtStatus.Unknowed).ToString(), true) ,
                     PostmasterAtStatus = Enum.Parse(typeof(PostmasterAtStatus), (result.postmaster_at_status ?? PostmasterAtStatus.Unknowed).ToString(), true),
                     ComplianceStatus = Enum.Parse(typeof(ComplianceStatus), (result.compliance_status ?? ComplianceStatus.Unknowed).ToString(), true),
-                    Dns = Dns.ConvertToDns(result.dns)
+                    Dns = SparkPost.Dns.ConvertToDns(result.dns)
                 }
                 : null;
         }

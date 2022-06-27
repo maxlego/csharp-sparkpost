@@ -7,10 +7,10 @@ namespace SparkPost.Examples
     {
         public static void Main(string[] args)
         {
-            var settings = ConfigurationManager.AppSettings;
-            var fromAddr = settings["fromaddr"];
-            var toAddr = settings["toaddr"];
-            var ccAddr = settings["ccaddr"];
+            var apikey = "YOUR_API_KEY";
+            var fromAddr = "from-csharp@yourdomain.com";
+            var toAddr = "to@you.com";
+            var ccAddr = "cc@them.com";
 
             var trans = new Transmission();
 
@@ -37,7 +37,7 @@ namespace SparkPost.Examples
 
             Console.Write("Sending CC sample mail...");
 
-            var client = new Client(settings["apikey"]);
+            var client = new Client(apikey);
             client.CustomSettings.SendingMode = SendingModes.Sync;
 
             var response = client.Transmissions.Send(trans);
