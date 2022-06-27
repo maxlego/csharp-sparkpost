@@ -1,51 +1,50 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Should;
 using TechTalk.SpecFlow;
+using Xunit;
 
 namespace SparkPost.Acceptance
 {
     [Binding]
     public class MetricsSteps
     {
-        [When(@"I query my deliverability for (.*)")]
-        public void WhenIQueryMyDeliverability(string metric)
+        private readonly ScenarioContext _scenarioContext;
+
+        public MetricsSteps(ScenarioContext scenarioContext)
         {
-            var client = ScenarioContext.Current.Get<IClient>();
-            Response response = null;
-            Task.Run(async () =>
-            {
-                response = await client.Metrics.GetDeliverability(new
+            _scenarioContext = scenarioContext;
+        }
+        
+        [When(@"I query my deliverability for (.*)")]
+        public async Task WhenIQueryMyDeliverability(string metric)
+        {
+            var client = _scenarioContext.Get<IClient>();
+            Response response = await client.Metrics.GetDeliverability(new
                 {
                     from = DateTime.MinValue,
                     metrics = metric
                 });
-            }).Wait();
 
-            ScenarioContext.Current.Set(response);
+            _scenarioContext.Set(response);
         }
 
         [When(@"I query my bounce reasons")]
-        public void y()
+        public async Task y()
         {
-            var client = ScenarioContext.Current.Get<IClient>();
-            Response response = null;
-            Task.Run(async () =>
-            {
-                response = await client.Metrics.GetBounceReasons(new
+            var client = _scenarioContext.Get<IClient>();
+            Response response = await client.Metrics.GetBounceReasons(new
                 {
                     from = DateTime.MinValue
                 });
-            }).Wait();
 
-            ScenarioContext.Current.Set(response);
+            _scenarioContext.Set(response);
         }
 
         [Then("it should return some metrics count")]
         public void x()
         {
-            var response = ScenarioContext.Current.Get<Response>();
-            response.ShouldBeType(typeof(GetMetricsResponse));
+            var response = _scenarioContext.Get<Response>();
+            Assert.IsType<GetMetricsResponse>(response);
         }
     }
 }

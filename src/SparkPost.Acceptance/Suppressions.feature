@@ -3,6 +3,7 @@
 Background:
 	Given my api key is 'yyy'
 
+	@ignore
 Scenario: Adding an email to the suppressions list
 	Given I have a random email address ending in '@cauthon.com'
 	When I add my random email address a to my suppressions list
