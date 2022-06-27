@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Configuration;
+using System.Threading.Tasks;
 
 namespace SparkPost.Examples
 {
     internal class CC
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var apikey = "YOUR_API_KEY";
             var fromAddr = "from-csharp@yourdomain.com";
@@ -38,9 +39,8 @@ namespace SparkPost.Examples
             Console.Write("Sending CC sample mail...");
 
             var client = new Client(apikey);
-            client.CustomSettings.SendingMode = SendingModes.Sync;
 
-            var response = client.Transmissions.Send(trans);
+            var response = await client.Transmissions.Send(trans);
 
             Console.WriteLine("done");
         }

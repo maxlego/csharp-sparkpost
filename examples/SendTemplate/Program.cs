@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Threading.Tasks;
 
 namespace SparkPost.Examples
 {
@@ -13,7 +14,7 @@ namespace SparkPost.Examples
 
     internal class SendTemplate
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var fromAddr = "from-csharp@yourdomain.com";
             var toAddr = "to@you.com";
@@ -49,9 +50,8 @@ namespace SparkPost.Examples
             Console.Write("Sending mail...");
 
             var client = new Client(apikey);
-            client.CustomSettings.SendingMode = SendingModes.Sync;
 
-            var response = client.Transmissions.Send(trans);
+            var response = await client.Transmissions.Send(trans);
 
             Console.WriteLine("done");
         }

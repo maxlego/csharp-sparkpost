@@ -32,9 +32,7 @@ namespace SparkPost
             SubaccountId = subAccountId;
 
             var dataMapper = new DataMapper(Version);
-            var asyncRequestSender = new AsyncRequestSender(this, dataMapper);
-            var syncRequestSender = new SyncRequestSender(asyncRequestSender);
-            var requestSender = new RequestSender(asyncRequestSender, syncRequestSender, this);
+            var requestSender = new RequestSender(this, dataMapper);
 
             SendingDomains = new SendingDomains(this, requestSender, dataMapper);
             Transmissions = new Transmissions(this, requestSender, dataMapper);
@@ -93,7 +91,6 @@ namespace SparkPost
                     UserAgent = $"csharp-sparkpost/{currentVersion}";
             }
 
-            public SendingModes SendingMode { get; set; }
             public string UserAgent { get; set; }
 
             public HttpClient CreateANewHttpClient()

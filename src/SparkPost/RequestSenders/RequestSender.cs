@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Globalization;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace SparkPost.RequestSenders
 {
@@ -6,30 +9,52 @@ namespace SparkPost.RequestSenders
     {
         Task<Response> Send(Request request);
     }
-
     public class RequestSender : IRequestSender
     {
-        private readonly AsyncRequestSender asyncRequestSender;
         private readonly IClient client;
-        private readonly SyncRequestSender syncRequestSender;
+        private readonly IDataMapper dataMapper;
 
-        public RequestSender(AsyncRequestSender asyncRequestSender, SyncRequestSender syncRequestSender, IClient client)
+        public RequestSender(IClient client, IDataMapper dataMapper)
         {
-            this.asyncRequestSender = asyncRequestSender;
-            this.syncRequestSender = syncRequestSender;
             this.client = client;
+            this.dataMapper = dataMapper;
         }
 
-        public Task<Response> Send(Request request)
+        public virtual async Task<Response> Send(Request request)
         {
-            return PickTheRequestSender().Send(request);
+            using (var httpClient = client.CustomSettings.CreateANewHttpClient())
+            {
+                httpClient.BaseAddress = new Uri(client.ApiHost);
+                httpClient.DefaultRequestHeaders.Add("Authorization", client.ApiKey);
+
+                SetTheUserAgentIfItIsProvided(httpClient);
+
+                if (client.SubaccountId != 0)
+                    httpClient.DefaultRequestHeaders.Add("X-MSYS-SUBACCOUNT",
+                        client.SubaccountId.ToString(CultureInfo.InvariantCulture));
+
+                var result = await GetTheResponse(request, httpClient);
+
+                return new Response
+                {
+                    StatusCode = result.StatusCode,
+                    ReasonPhrase = result.ReasonPhrase,
+                    Content = await result.Content.ReadAsStringAsync()
+                };
+            }
         }
 
-        private IRequestSender PickTheRequestSender()
+        private void SetTheUserAgentIfItIsProvided(HttpClient httpClient)
         {
-            return client.CustomSettings.SendingMode == SendingModes.Sync
-                ? syncRequestSender
-                : asyncRequestSender as IRequestSender;
+            if (string.IsNullOrEmpty(client.CustomSettings.UserAgent) == false)
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", client.CustomSettings.UserAgent);
+        }
+
+        protected virtual async Task<HttpResponseMessage> GetTheResponse(Request request, HttpClient httpClient)
+        {
+            return await new RequestMethodFinder(httpClient, dataMapper)
+                .FindFor(request)
+                .Execute(request);
         }
     }
 }
