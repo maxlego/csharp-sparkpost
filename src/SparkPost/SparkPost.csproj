@@ -9,9 +9,11 @@
     <AssemblyVersion>2.0.0</AssemblyVersion>
     <FileVersion>2.0.0</FileVersion>
     <Authors>Darren Cauthon</Authors>
-    <PackageIconUrl>https://www.sparkpost.com/sites/default/files/attachments/SparkPost_Logo_2-Color_Gray-Orange_RGB.svg</PackageIconUrl>
+    <icon>https://www.sparkpost.com/sites/default/files/attachments/SparkPost_Logo_2-Color_Gray-Orange_RGB.svg</icon>
     <PackageId>SparkPost</PackageId>
+    <license>https://github.com/darrencauthon/csharp-sparkpost/blob/master/LICENSE.md</license>
     <PackageProjectUrl>https://github.com/SparkPost/csharp-sparkpost</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageReleaseNotes>Added support to pass a user-agent.</PackageReleaseNotes>
     <PackageTags>email</PackageTags>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -22,5 +24,10 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="MimeMapping" Version="1.0.1.37" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="">
+      <Link>LICENSE.md</Link>
+    </None>
   </ItemGroup>
 </Project>
