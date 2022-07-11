@@ -81,5 +81,7 @@
         /// Gets the sub account.
         /// </summary>
         long SubaccountId { get; }
+
+        Events Events { get; }
     }
 }

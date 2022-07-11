@@ -5,10 +5,10 @@
     <Product>SparkPost</Product>
     <Description>SparkPost API</Description>
     <Copyright>Copyright 2022</Copyright>
-    <Version>2.0.0</Version>
-    <AssemblyVersion>2.0.0</AssemblyVersion>
-    <FileVersion>2.0.0</FileVersion>
-    <Authors>Darren Cauthon</Authors>
+    <Version>2.0.1</Version>
+    <AssemblyVersion>2.0.1</AssemblyVersion>
+    <FileVersion>2.0.1</FileVersion>
+    <Authors>Darren Cauthon; Adam Hathcock</Authors>
     <icon>https://www.sparkpost.com/sites/default/files/attachments/SparkPost_Logo_2-Color_Gray-Orange_RGB.svg</icon>
     <PackageId>SparkPost</PackageId>
     <license>https://github.com/darrencauthon/csharp-sparkpost/blob/master/LICENSE.md</license>
