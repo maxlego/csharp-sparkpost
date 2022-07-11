@@ -12,7 +12,7 @@ namespace SparkPost.ValueMappers
 
         public object Map(Type propertyType, object value)
         {
-            var dictionary = (IDictionary<string, string>) value;
+            var dictionary = (IDictionary<string, string>)value;
             return dictionary.Count > 0 ? dictionary : null;
         }
     }

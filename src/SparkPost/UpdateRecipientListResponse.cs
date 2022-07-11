@@ -1,6 +1,4 @@
 ﻿namespace SparkPost
 {
-    public class UpdateRecipientListResponse : Response
-    {
-    }
+    public class UpdateRecipientListResponse : Response { }
 }

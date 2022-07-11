@@ -1,7 +1,4 @@
 ﻿namespace SparkPost.Tests
 {
-    public class SubaccountTests
-    {
-        
-    }
+    public class SubaccountTests { }
 }

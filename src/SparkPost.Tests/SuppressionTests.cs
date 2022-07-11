@@ -24,8 +24,7 @@ namespace SparkPost.Tests
 
                 requestSender = new Mock<IRequestSender>();
 
-                requestSender.Setup(x => x.Send(It.IsAny<Request>()))
-                             .Returns(Task.FromResult(response));
+                requestSender.Setup(x => x.Send(It.IsAny<Request>())).Returns(Task.FromResult(response));
 
                 var dataMapper = new Mock<IDataMapper>();
 
@@ -64,17 +63,17 @@ namespace SparkPost.Tests
             {
                 var version = Guid.NewGuid().ToString();
 
-                client
-                    .Setup(x => x.Version)
-                    .Returns(version);
+                client.Setup(x => x.Version).Returns(version);
 
                 requestSender
                     .Setup(x => x.Send(It.IsAny<Request>()))
-                    .Callback((Request r) =>
-                    {
-                        Assert.Equal($"api/{version}/suppression-list/{email}", r.Url);
-                        Assert.Equal("DELETE", r.Method);
-                    })
+                    .Callback(
+                        (Request r) =>
+                        {
+                            Assert.Equal($"api/{version}/suppression-list/{email}", r.Url);
+                            Assert.Equal("DELETE", r.Method);
+                        }
+                    )
                     .Returns(Task.FromResult(response));
 
                 await suppressions.Delete(email);
@@ -87,17 +86,17 @@ namespace SparkPost.Tests
 
                 var email = "testing@test.com";
 
-                client
-                    .Setup(x => x.Version)
-                    .Returns(version);
+                client.Setup(x => x.Version).Returns(version);
 
                 requestSender
                     .Setup(x => x.Send(It.IsAny<Request>()))
-                    .Callback((Request r) =>
-                    {
-                        Assert.Equal($"api/{version}/suppression-list/testing%40test.com", r.Url);
-                        Assert.Equal("DELETE", r.Method);
-                    })
+                    .Callback(
+                        (Request r) =>
+                        {
+                            Assert.Equal($"api/{version}/suppression-list/testing%40test.com", r.Url);
+                            Assert.Equal("DELETE", r.Method);
+                        }
+                    )
                     .Returns(Task.FromResult(response));
 
                 await suppressions.Delete(email);
@@ -114,20 +113,12 @@ namespace SparkPost.Tests
 
             public CreateOrUpdateTests()
             {
-                response = new Response
-                {
-                    StatusCode = HttpStatusCode.OK
-                };
+                response = new Response { StatusCode = HttpStatusCode.OK };
 
-                suppressionsList = new List<Suppression>
-                {
-                    new Suppression(),
-                    new Suppression()
-                };
+                suppressionsList = new List<Suppression> { new Suppression(), new Suppression() };
 
                 requestSender = new Mock<IRequestSender>();
-                requestSender.Setup(x => x.Send(It.IsAny<Request>()))
-                             .Returns(Task.FromResult(response));
+                requestSender.Setup(x => x.Send(It.IsAny<Request>())).Returns(Task.FromResult(response));
 
                 var dataMapper = new Mock<IDataMapper>();
 
@@ -162,15 +153,16 @@ namespace SparkPost.Tests
             [Fact]
             public async Task It_should_make_a_properly_formed_request()
             {
-                client.Setup(x => x.Version)
-                      .Returns(Guid.NewGuid().ToString());
+                client.Setup(x => x.Version).Returns(Guid.NewGuid().ToString());
                 requestSender
                     .Setup(x => x.Send(It.IsAny<Request>()))
-                    .Callback((Request r) =>
-                    {
-                        Assert.Equal($"api/{client.Object.Version}/suppression-list", r.Url);
-                        Assert.Equal("PUT JSON", r.Method);
-                    })
+                    .Callback(
+                        (Request r) =>
+                        {
+                            Assert.Equal($"api/{client.Object.Version}/suppression-list", r.Url);
+                            Assert.Equal("PUT JSON", r.Method);
+                        }
+                    )
                     .Returns(Task.FromResult(response));
 
                 await suppressions.CreateOrUpdate(suppressionsList);

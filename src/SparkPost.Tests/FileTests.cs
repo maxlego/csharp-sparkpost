@@ -46,6 +46,5 @@ namespace SparkPost.Tests
         {
             return Convert.ToBase64String(GetBytes(input));
         }
-
     }
 }

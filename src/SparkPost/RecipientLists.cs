@@ -25,13 +25,13 @@ namespace SparkPost
         {
             var request = new Request
             {
-                Url = $"api/{client.Version}/recipient-lists/" + recipientListsId+ "?show_recipients=true",
+                Url = $"api/{client.Version}/recipient-lists/" + recipientListsId + "?show_recipients=true",
                 Method = "GET",
             };
 
             var response = await requestSender.Send(request);
 
-            if (new[] {HttpStatusCode.OK, HttpStatusCode.NotFound}.Contains(response.StatusCode) == false)
+            if (new[] { HttpStatusCode.OK, HttpStatusCode.NotFound }.Contains(response.StatusCode) == false)
                 throw new ResponseException(response);
 
             var recipientListsResponse = new RetrieveRecipientListsResponse()
@@ -41,9 +41,9 @@ namespace SparkPost
                 Content = response.Content,
             };
 
-
             var results = JsonConvert.DeserializeObject<dynamic>(response.Content).results;
-            if (results.recipients == null) return recipientListsResponse;
+            if (results.recipients == null)
+                return recipientListsResponse;
 
             recipientListsResponse.TotalAcceptedRecipients = results.total_accepted_recipients;
 
@@ -51,14 +51,10 @@ namespace SparkPost
             {
                 Id = results.id,
                 Recipients = RetrieveRecipientListsResponse.CreateFromResponse(response),
-                Attributes = results.attributes != null
-                    ? new Attributes
-                    {
-                        InternalId = results.attributes.internal_id
-                        ,
-                        ListGroupId = results.attributes.list_group_id
-                    }
-                    : null,
+                Attributes =
+                    results.attributes != null
+                        ? new Attributes { InternalId = results.attributes.internal_id, ListGroupId = results.attributes.list_group_id }
+                        : null,
                 Description = results.description,
                 Name = results.name
             };
@@ -68,11 +64,7 @@ namespace SparkPost
 
         public async Task<bool> Delete(string id)
         {
-            var request = new Request
-            {
-                Url = $"/api/{client.Version}/recipient-lists/{id}",
-                Method = "DELETE"
-            };
+            var request = new Request { Url = $"/api/{client.Version}/recipient-lists/{id}", Method = "DELETE" };
 
             var response = await requestSender.Send(request);
             return response.StatusCode == HttpStatusCode.NoContent;
@@ -89,7 +81,7 @@ namespace SparkPost
 
             var response = await requestSender.Send(request);
 
-            if (new[] {HttpStatusCode.OK, HttpStatusCode.NotFound}.Contains(response.StatusCode) == false)
+            if (new[] { HttpStatusCode.OK, HttpStatusCode.NotFound }.Contains(response.StatusCode) == false)
                 throw new ResponseException(response);
 
             return new UpdateRecipientListResponse()
@@ -111,7 +103,8 @@ namespace SparkPost
 
             var response = await requestSender.Send(request);
 
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var results = JsonConvert.DeserializeObject<dynamic>(response.Content).results;
             return new SendRecipientListsResponse()

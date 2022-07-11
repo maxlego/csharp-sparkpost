@@ -26,7 +26,7 @@ namespace SparkPost.Acceptance
         public void GivenTheTransmissionIsMeantToBeSentfrom(string email)
         {
             var transmission = scenarioContext.Get<Transmission>();
-            transmission.Content.From = new Address {Email = email};
+            transmission.Content.From = new Address { Email = email };
             scenarioContext.Set(transmission);
         }
 
@@ -34,7 +34,7 @@ namespace SparkPost.Acceptance
         public void GivenTheTransmissionIsMeantToBeSentTo(string email)
         {
             var transmission = scenarioContext.Get<Transmission>();
-            transmission.Recipients.Add(new Recipient {Address = new Address {Email = email}});
+            transmission.Recipients.Add(new Recipient { Address = new Address { Email = email } });
             scenarioContext.Set(transmission);
         }
 
@@ -73,11 +73,13 @@ namespace SparkPost.Acceptance
         {
             var transmission = scenarioContext.Get<Transmission>();
 
-            transmission.Recipients.Add(new Recipient
-            {
-                Type = RecipientType.CC,
-                Address = new Address {Email = email}
-            });
+            transmission.Recipients.Add(
+                new Recipient
+                {
+                    Type = RecipientType.CC,
+                    Address = new Address { Email = email }
+                }
+            );
 
             scenarioContext.Set(transmission);
         }
@@ -87,11 +89,13 @@ namespace SparkPost.Acceptance
         {
             var transmission = scenarioContext.Get<Transmission>();
 
-            transmission.Recipients.Add(new Recipient
-            {
-                Type = RecipientType.BCC,
-                Address = new Address {Email = email}
-            });
+            transmission.Recipients.Add(
+                new Recipient
+                {
+                    Type = RecipientType.BCC,
+                    Address = new Address { Email = email }
+                }
+            );
 
             scenarioContext.Set(transmission);
         }

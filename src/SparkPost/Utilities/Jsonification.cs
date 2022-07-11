@@ -11,8 +11,7 @@ namespace SparkPost.Utilities
 
         internal static string SerializeObject(object @object)
         {
-            return JsonConvert.SerializeObject(@object,
-                new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.None});
+            return JsonConvert.SerializeObject(@object, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.None });
         }
     }
 }

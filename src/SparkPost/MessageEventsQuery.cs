@@ -7,7 +7,6 @@ namespace SparkPost
 {
     public class MessageEventsQuery
     {
-
         public MessageEventsQuery()
         {
             this.Events = new List<string>();
@@ -114,6 +113,5 @@ namespace SparkPost
         /// Example: 65832150921904138.
         /// </summary>
         public IList<string> TransmissionIds { get; set; }
-
     }
 }

@@ -20,14 +20,11 @@ namespace SparkPost
 
         public async Task<ListSubaccountResponse> List()
         {
-            var request = new Request
-            {
-                Url = $"/api/{client.Version}/subaccounts",
-                Method = "GET"
-            };
+            var request = new Request { Url = $"/api/{client.Version}/subaccounts", Method = "GET" };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             return ListSubaccountResponse.CreateFromResponse(response);
         }
@@ -38,16 +35,12 @@ namespace SparkPost
             {
                 Url = $"api/{client.Version}/subaccounts",
                 Method = "POST",
-                Data = new
-                {
-                    name = subaccount.Name,
-                    key_label = subaccount.KeyLabel,
-                    key_grants = subaccount.KeyGrants
-                }
+                Data = new { name = subaccount.Name, key_label = subaccount.KeyLabel, key_grants = subaccount.KeyGrants }
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var results = Jsonification.DeserializeObject<dynamic>(response.Content).results;
 
@@ -69,15 +62,12 @@ namespace SparkPost
             {
                 Url = $"api/{client.Version}/subaccounts/{subaccount.Id}",
                 Method = "PUT JSON",
-                Data = new
-                {
-                    name = subaccount.Name,
-                    status = subaccount.Status.ToString().ToLowerInvariant()
-                }
+                Data = new { name = subaccount.Name, status = subaccount.Status.ToString().ToLowerInvariant() }
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var results = Jsonification.DeserializeObject<dynamic>(response.Content).results;
 
@@ -88,6 +78,5 @@ namespace SparkPost
                 Content = response.Content
             };
         }
-
     }
 }

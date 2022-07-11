@@ -1,6 +1,4 @@
 ﻿namespace SparkPost
 {
-    public class Attachment : File
-    {
-    }
+    public class Attachment : File { }
 }

@@ -2,10 +2,7 @@
 {
     public class Attributes
     {
-        public Attributes()
-        {
-
-        }
+        public Attributes() { }
 
         public int InternalId { get; set; }
 

@@ -86,9 +86,10 @@ namespace SparkPost
             {
                 ["substitution_data"] = AlterThisDictionaryToBePassedToSparkpost(transmission.SubstitutionData),
                 ["metadata"] = AlterThisDictionaryToBePassedToSparkpost(transmission.Metadata),
-                ["recipients"] = transmission.ListId != null
-                    ? (object) new Dictionary<string, object> {["list_id"] = transmission.ListId}
-                    : transmission.Recipients.Select(ToDictionary)
+                ["recipients"] =
+                    transmission.ListId != null
+                        ? (object)new Dictionary<string, object> { ["list_id"] = transmission.ListId }
+                        : transmission.Recipients.Select(ToDictionary)
             };
 
             var result = WithCommonConventions(transmission, data);
@@ -100,21 +101,20 @@ namespace SparkPost
 
         private static IDictionary<string, object> AlterThisDictionaryToBePassedToSparkpost(IDictionary<string, object> dictionary)
         {
-            return dictionary != null && dictionary.Keys.Any()
-                ? dictionary
-                : null;
+            return dictionary != null && dictionary.Keys.Any() ? dictionary : null;
         }
 
         public virtual IDictionary<string, object> ToDictionary(Recipient recipient)
         {
-            return WithCommonConventions(recipient, new Dictionary<string, object>()
-            {
-                ["type"] = null,
-                ["substitution_data"] =
-                    recipient.SubstitutionData != null && recipient.SubstitutionData.Keys.Any()
-                        ? recipient.SubstitutionData
-                        : null,
-            });
+            return WithCommonConventions(
+                recipient,
+                new Dictionary<string, object>()
+                {
+                    ["type"] = null,
+                    ["substitution_data"] =
+                        recipient.SubstitutionData != null && recipient.SubstitutionData.Keys.Any() ? recipient.SubstitutionData : null,
+                }
+            );
         }
 
         public virtual IDictionary<string, object> ToDictionary(Suppression suppression)
@@ -179,34 +179,40 @@ namespace SparkPost
 
         public IDictionary<string, object> ToDictionary(MessageEventsQuery query)
         {
-            return WithCommonConventions(query, new Dictionary<string, object>()
-            {
-                ["events"] = string.Join(",", query.Events),
-                ["campaign_ids"] = string.Join(",", query.CampaignIds),
-                ["bounce_classes"] = string.Join(",", query.BounceClasses),
-                ["campaign_ids"] = string.Join(",", query.CampaignIds),
-                ["friendly_froms"] = string.Join(",", query.FriendlyFroms),
-                ["message_ids"] = string.Join(",", query.MessageIds),
-                ["recipients"] = string.Join(",", query.Recipients),
-                ["subaccounts"] = string.Join(",", query.Subaccounts),
-                ["template_ids"] = string.Join(",", query.TemplateIds),
-                ["transmission_ids"] = string.Join(",", query.TransmissionIds)
-            });
+            return WithCommonConventions(
+                query,
+                new Dictionary<string, object>()
+                {
+                    ["events"] = string.Join(",", query.Events),
+                    ["campaign_ids"] = string.Join(",", query.CampaignIds),
+                    ["bounce_classes"] = string.Join(",", query.BounceClasses),
+                    ["campaign_ids"] = string.Join(",", query.CampaignIds),
+                    ["friendly_froms"] = string.Join(",", query.FriendlyFroms),
+                    ["message_ids"] = string.Join(",", query.MessageIds),
+                    ["recipients"] = string.Join(",", query.Recipients),
+                    ["subaccounts"] = string.Join(",", query.Subaccounts),
+                    ["template_ids"] = string.Join(",", query.TemplateIds),
+                    ["transmission_ids"] = string.Join(",", query.TransmissionIds)
+                }
+            );
         }
 
         public IDictionary<string, object> ToDictionary(MetricsQuery query)
         {
-            return WithCommonConventions(query, new Dictionary<string, object>()
-            {
-                ["domains"] = string.Join(",", query.Domains),
-                ["campaigns"] = string.Join(",", query.Campaigns),
-                ["templates"] = string.Join(",", query.Templates),
-                ["sending_ips"] = string.Join(",", query.SendingIps),
-                ["ip_pools"] = string.Join(",", query.IpPools),
-                ["sending_domains"] = string.Join(",", query.SendingDomains),
-                ["subaccounts"] = string.Join(",", query.Subaccounts),
-                ["metrics"] = string.Join(",", query.Metrics)
-            });
+            return WithCommonConventions(
+                query,
+                new Dictionary<string, object>()
+                {
+                    ["domains"] = string.Join(",", query.Domains),
+                    ["campaigns"] = string.Join(",", query.Campaigns),
+                    ["templates"] = string.Join(",", query.Templates),
+                    ["sending_ips"] = string.Join(",", query.SendingIps),
+                    ["ip_pools"] = string.Join(",", query.IpPools),
+                    ["sending_domains"] = string.Join(",", query.SendingDomains),
+                    ["subaccounts"] = string.Join(",", query.Subaccounts),
+                    ["metrics"] = string.Join(",", query.Metrics)
+                }
+            );
         }
 
         public virtual IDictionary<string, object> ToDictionary(Template template)
@@ -228,46 +234,46 @@ namespace SparkPost
         {
             var converters = ToDictionaryMethods();
             if (converters.ContainsKey(anything.GetType()))
-                return converters[anything.GetType()].Invoke(this, BindingFlags.Default, null,
-                    new[] {anything}, CultureInfo.CurrentCulture) as IDictionary<string, object>;
+                return converters[anything.GetType()].Invoke(this, BindingFlags.Default, null, new[] { anything }, CultureInfo.CurrentCulture)
+                    as IDictionary<string, object>;
             return WithCommonConventions(anything);
         }
 
         public IDictionary<Type, MethodInfo> ToDictionaryMethods()
         {
-            return this.GetType().GetMethods()
+            return this.GetType()
+                .GetMethods()
                 .Where(x => x.Name == "ToDictionary")
                 .Where(x => x.GetParameters().Length == 1)
-                .Select(x => new
-                {
-                    TheType = x.GetParameters().First().ParameterType,
-                    TheMethod = x
-                }).ToList()
+                .Select(x => new { TheType = x.GetParameters().First().ParameterType, TheMethod = x })
+                .ToList()
                 .ToDictionary(x => x.TheType, x => x.TheMethod);
         }
 
         private static bool AnyValuesWereSetOn(object target)
         {
-            return target.GetType()
-                .GetProperties()
-                .Any(x => x.GetValue(target) != null);
+            return target.GetType().GetProperties().Any(x => x.GetValue(target) != null);
         }
 
         private static IDictionary<string, object> RemoveNulls(IDictionary<string, object> dictionary)
         {
             var blanks = dictionary.Keys.Where(k => dictionary[k] == null).ToList();
-            foreach (var key in blanks) dictionary.Remove(key);
+            foreach (var key in blanks)
+                dictionary.Remove(key);
             return dictionary;
         }
 
         private IDictionary<string, object> WithCommonConventions(object target, IDictionary<string, object> results = null)
         {
-            if (target == null) return null;
-            if (results == null) results = new Dictionary<string, object>();
+            if (target == null)
+                return null;
+            if (results == null)
+                results = new Dictionary<string, object>();
             foreach (var property in target.GetType().GetProperties())
             {
                 var name = SnakeCase.Convert(property.Name);
-                if (results.ContainsKey(name)) continue;
+                if (results.ContainsKey(name))
+                    continue;
 
                 results[name] = GetTheValue(property.PropertyType, property.GetValue(target));
             }
@@ -282,18 +288,21 @@ namespace SparkPost
 
         public IDictionary<string, object> ToDictionary(RecipientList recipientList)
         {
-
             var data = new Dictionary<string, object>
             {
                 ["recipients"] = recipientList.Recipients.Select(ToDictionary),
-                ["attributes"] = recipientList.Attributes != null 
-                ? (object)new Dictionary<string, object> {
-                                              ["internal_id"] = recipientList.Attributes.InternalId
-                                            , ["list_group_id"] = recipientList.Attributes.ListGroupId } : null
+                ["attributes"] =
+                    recipientList.Attributes != null
+                        ? (object)
+                            new Dictionary<string, object>
+                            {
+                                ["internal_id"] = recipientList.Attributes.InternalId,
+                                ["list_group_id"] = recipientList.Attributes.ListGroupId
+                            }
+                        : null
             };
             var result = WithCommonConventions(recipientList, data);
             return result;
-
         }
     }
 }

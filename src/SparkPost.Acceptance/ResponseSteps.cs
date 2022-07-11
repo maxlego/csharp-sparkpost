@@ -12,12 +12,12 @@ namespace SparkPost.Acceptance
         {
             _scenarioContext = scenarioContext;
         }
-        
+
         [Then(@"it should return a (.*)")]
         public void ThenItShouldReturnA(int statusCode)
         {
             var response = _scenarioContext.Get<Response>();
-             Assert.Equal(statusCode, response.StatusCode.GetHashCode());
+            Assert.Equal(statusCode, response.StatusCode.GetHashCode());
         }
     }
 }

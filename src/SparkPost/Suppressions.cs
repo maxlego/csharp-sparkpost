@@ -28,7 +28,8 @@ namespace SparkPost
 
         public async Task<ListSuppressionResponse> List(object query = null)
         {
-            if (query == null) query = new {};
+            if (query == null)
+                query = new { };
             var request = new Request
             {
                 Url = $"/api/{client.Version}/suppression-list",
@@ -37,7 +38,8 @@ namespace SparkPost
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var results = Jsonification.DeserializeObject<dynamic>(response.Content).results;
 
@@ -52,20 +54,14 @@ namespace SparkPost
 
         public async Task<ListSuppressionResponse> Retrieve(string email)
         {
-            var request = new Request
-            {
-                Url = $"/api/{client.Version}/suppression-list/{WebUtility.UrlEncode(email)}",
-                Method = "GET"
-            };
+            var request = new Request { Url = $"/api/{client.Version}/suppression-list/{WebUtility.UrlEncode(email)}", Method = "GET" };
 
             var response = await requestSender.Send(request);
 
-            if (new[] {HttpStatusCode.OK, HttpStatusCode.NotFound}.Contains(response.StatusCode) == false)
+            if (new[] { HttpStatusCode.OK, HttpStatusCode.NotFound }.Contains(response.StatusCode) == false)
                 throw new ResponseException(response);
 
-            dynamic results = response.StatusCode == HttpStatusCode.OK
-                ? Jsonification.DeserializeObject<dynamic>(response.Content).results
-                : null;
+            dynamic results = response.StatusCode == HttpStatusCode.OK ? Jsonification.DeserializeObject<dynamic>(response.Content).results : null;
 
             return new ListSuppressionResponse
             {
@@ -78,13 +74,15 @@ namespace SparkPost
 
         public async Task<UpdateSuppressionResponse> CreateOrUpdate(IEnumerable<string> emails)
         {
-            var suppressions = emails.Select(email =>
-                new Suppression
-                {
-                    Email = email,
-                    Transactional = true,
-                    NonTransactional = true
-                });
+            var suppressions = emails.Select(
+                email =>
+                    new Suppression
+                    {
+                        Email = email,
+                        Transactional = true,
+                        NonTransactional = true
+                    }
+            );
 
             return await CreateOrUpdate(suppressions);
         }
@@ -95,14 +93,12 @@ namespace SparkPost
             {
                 Url = $"api/{client.Version}/suppression-list",
                 Method = "PUT JSON",
-                Data = new
-                {
-                    recipients = suppressions.Select(x => dataMapper.ToDictionary(x)).ToList()
-                }
+                Data = new { recipients = suppressions.Select(x => dataMapper.ToDictionary(x)).ToList() }
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var updateSuppressionResponse = new UpdateSuppressionResponse();
             LeftRight.SetValuesToMatch(updateSuppressionResponse, response);
@@ -111,11 +107,7 @@ namespace SparkPost
 
         public async Task<bool> Delete(string email)
         {
-            var request = new Request
-            {
-                Url = $"api/{client.Version}/suppression-list/{WebUtility.UrlEncode(email)}",
-                Method = "DELETE"
-            };
+            var request = new Request { Url = $"api/{client.Version}/suppression-list/{WebUtility.UrlEncode(email)}", Method = "DELETE" };
 
             var response = await requestSender.Send(request);
             return response.StatusCode == HttpStatusCode.NoContent;
@@ -125,23 +117,25 @@ namespace SparkPost
         {
             var suppressions = new List<Suppression>();
 
-            if (results == null) return suppressions;
+            if (results == null)
+                return suppressions;
 
             foreach (var result in results)
             {
-                suppressions.Add(new Suppression
-                {
-                    Description = result.description,
-                    Transactional = result.transactional == true,
-                    NonTransactional = result.non_transactional == true,
-                    Email = result.recipient,
-                    Source = result.source,
-                    Created = result.created,
-                    Updated = result.updated
-                });
+                suppressions.Add(
+                    new Suppression
+                    {
+                        Description = result.description,
+                        Transactional = result.transactional == true,
+                        NonTransactional = result.non_transactional == true,
+                        Email = result.recipient,
+                        Source = result.source,
+                        Created = result.created,
+                        Updated = result.updated
+                    }
+                );
             }
             return suppressions;
         }
-
     }
 }

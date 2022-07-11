@@ -12,23 +12,19 @@ namespace SparkPost.Tests
             private readonly DataMapper mapper;
             private readonly Recipient recipient;
 
-
             public RecipientMappingTests()
             {
                 recipient = new Recipient();
                 mapper = new DataMapper("v1");
             }
-            
+
             [Fact]
             public void address()
             {
                 var value = Guid.NewGuid().ToString();
                 recipient.Address.Email = value;
                 var x = mapper.ToDictionary(recipient)["address"];
-                Assert.Equal(value, mapper.ToDictionary(recipient)
-                    ["address"]
-                    .CastAs<IDictionary<string, object>>()
-                    ["email"]);
+                Assert.Equal(value, mapper.ToDictionary(recipient)["address"].CastAs<IDictionary<string, object>>()["email"]);
             }
 
             [Fact]
@@ -48,10 +44,8 @@ namespace SparkPost.Tests
                 recipient.Tags.Add(tag2);
                 var theTags = mapper.ToDictionary(recipient)["tags"];
                 Assert.Equal(2, theTags.CastAs<IEnumerable<object>>().Count());
-                Assert.Contains(tag1, mapper.ToDictionary(recipient)["tags"]
-                    .CastAs<IEnumerable<object>>());
-                Assert.Contains(tag2, mapper.ToDictionary(recipient)["tags"]
-                    .CastAs<IEnumerable<object>>());
+                Assert.Contains(tag1, mapper.ToDictionary(recipient)["tags"].CastAs<IEnumerable<object>>());
+                Assert.Contains(tag2, mapper.ToDictionary(recipient)["tags"].CastAs<IEnumerable<object>>());
             }
 
             [Fact]
@@ -66,8 +60,7 @@ namespace SparkPost.Tests
                 var key = Guid.NewGuid().ToString();
                 var value = Guid.NewGuid().ToString();
                 recipient.Metadata[key] = value;
-                Assert.Equal(value, mapper.ToDictionary(recipient)["metadata"]
-                    .CastAs<IDictionary<string, object>>()[key]);
+                Assert.Equal(value, mapper.ToDictionary(recipient)["metadata"].CastAs<IDictionary<string, object>>()[key]);
             }
 
             [Fact]
@@ -82,8 +75,7 @@ namespace SparkPost.Tests
                 var key = Guid.NewGuid().ToString();
                 var value = Guid.NewGuid().ToString();
                 recipient.SubstitutionData[key] = value;
-                Assert.Equal(value, mapper.ToDictionary(recipient)["substitution_data"]
-                    .CastAs<IDictionary<string, object>>()[key]);
+                Assert.Equal(value, mapper.ToDictionary(recipient)["substitution_data"].CastAs<IDictionary<string, object>>()[key]);
             }
 
             [Fact]
@@ -98,8 +90,7 @@ namespace SparkPost.Tests
                 var key = "TEST";
                 var value = Guid.NewGuid().ToString();
                 recipient.SubstitutionData[key] = value;
-                Assert.Equal(value, mapper.ToDictionary(recipient)["substitution_data"]
-                    .CastAs<IDictionary<string, object>>()[key]);
+                Assert.Equal(value, mapper.ToDictionary(recipient)["substitution_data"].CastAs<IDictionary<string, object>>()[key]);
             }
 
             [Fact]
@@ -109,7 +100,6 @@ namespace SparkPost.Tests
                 Assert.DoesNotContain("type", mapper.ToDictionary(recipient).Keys);
             }
         }
-
 
         public class AddressMappingTests
         {
@@ -169,9 +159,12 @@ namespace SparkPost.Tests
             {
                 var email = Guid.NewGuid().ToString();
                 transmission.Content.From = new Address { Email = email };
-                Assert.Equal(email, mapper.ToDictionary(transmission)["content"]
-                    .CastAs<IDictionary<string, object>>()["from"]
-                    .CastAs<IDictionary<string, object>>()["email"]);
+                Assert.Equal(
+                    email,
+                    mapper.ToDictionary(transmission)["content"].CastAs<IDictionary<string, object>>()["from"].CastAs<IDictionary<string, object>>()[
+                        "email"
+                    ]
+                );
             }
 
             [Fact]
@@ -184,12 +177,8 @@ namespace SparkPost.Tests
 
                 var result = mapper.ToDictionary(transmission)["recipients"] as IEnumerable<IDictionary<string, object>>;
                 Assert.Equal(2, result.Count());
-                Assert.Equal(recipient1.Address.Email, result.ToList()[0]["address"]
-                    .CastAs<IDictionary<string, object>>()
-                    ["email"]);
-                Assert.Equal(recipient2.Address.Email, result.ToList()[1]["address"]
-                    .CastAs<IDictionary<string, object>>()
-                    ["email"]);
+                Assert.Equal(recipient1.Address.Email, result.ToList()[0]["address"].CastAs<IDictionary<string, object>>()["email"]);
+                Assert.Equal(recipient2.Address.Email, result.ToList()[1]["address"].CastAs<IDictionary<string, object>>()["email"]);
             }
 
             [Fact]
@@ -238,8 +227,7 @@ namespace SparkPost.Tests
                 var key = Guid.NewGuid().ToString();
                 var value = Guid.NewGuid().ToString();
                 transmission.Metadata[key] = value;
-                Assert.Equal(value, mapper.ToDictionary(transmission)["metadata"]
-                    .CastAs<IDictionary<string, object>>()[key]);
+                Assert.Equal(value, mapper.ToDictionary(transmission)["metadata"].CastAs<IDictionary<string, object>>()[key]);
             }
 
             [Fact]
@@ -248,8 +236,7 @@ namespace SparkPost.Tests
                 var key = "TEST";
                 var value = Guid.NewGuid().ToString();
                 transmission.Metadata[key] = value;
-                Assert.Equal(value, mapper.ToDictionary(transmission)["metadata"]
-                    .CastAs<IDictionary<string, object>>()[key]);
+                Assert.Equal(value, mapper.ToDictionary(transmission)["metadata"].CastAs<IDictionary<string, object>>()[key]);
             }
 
             [Fact]
@@ -264,8 +251,7 @@ namespace SparkPost.Tests
                 var key = Guid.NewGuid().ToString();
                 var value = Guid.NewGuid().ToString();
                 transmission.SubstitutionData[key] = value;
-                Assert.Equal(value, mapper.ToDictionary(transmission)["substitution_data"]
-                    .CastAs<IDictionary<string, object>>()[key]);
+                Assert.Equal(value, mapper.ToDictionary(transmission)["substitution_data"].CastAs<IDictionary<string, object>>()[key]);
             }
 
             [Fact]
@@ -280,27 +266,22 @@ namespace SparkPost.Tests
                 var key = "TEST";
                 var value = Guid.NewGuid().ToString();
                 transmission.SubstitutionData[key] = value;
-                Assert.Equal(value, mapper.ToDictionary(transmission)["substitution_data"]
-                    .CastAs<IDictionary<string, object>>()[key]);
+                Assert.Equal(value, mapper.ToDictionary(transmission)["substitution_data"].CastAs<IDictionary<string, object>>()[key]);
             }
 
             [Fact]
             public void options()
             {
                 transmission.Options.ClickTracking = true;
-                Assert.True((bool)mapper.ToDictionary(transmission)["options"]
-                    .CastAs<IDictionary<string, object>>()["click_tracking"]);
+                Assert.True((bool)mapper.ToDictionary(transmission)["options"].CastAs<IDictionary<string, object>>()["click_tracking"]);
 
                 transmission.Options.ClickTracking = false;
-                Assert.False((bool)mapper.ToDictionary(transmission)["options"]
-                    .CastAs<IDictionary<string, object>>()["click_tracking"]);
+                Assert.False((bool)mapper.ToDictionary(transmission)["options"].CastAs<IDictionary<string, object>>()["click_tracking"]);
 
                 transmission.Options.InlineCss = true;
-                Assert.True((bool)mapper.ToDictionary(transmission)["options"]
-                    .CastAs<IDictionary<string, object>>()["inline_css"]);
+                Assert.True((bool)mapper.ToDictionary(transmission)["options"].CastAs<IDictionary<string, object>>()["inline_css"]);
             }
         }
-
 
         public class MappingCcFields
         {
@@ -318,18 +299,34 @@ namespace SparkPost.Tests
             [InlineData(false)]
             public void It_should_set_the_CC_Header_for_only_the_cc_emails(bool useTo)
             {
-                var recipient1 = new Recipient { Type = RecipientType.CC, Address = new Address { Email = Guid.NewGuid().ToString() } };
-                var recipient2 = new Recipient { Type = RecipientType.BCC, Address = new Address { Email = Guid.NewGuid().ToString() } };
-                var recipient3 = new Recipient { Type = RecipientType.CC, Address = new Address { Email = Guid.NewGuid().ToString() } };
+                var recipient1 = new Recipient
+                {
+                    Type = RecipientType.CC,
+                    Address = new Address { Email = Guid.NewGuid().ToString() }
+                };
+                var recipient2 = new Recipient
+                {
+                    Type = RecipientType.BCC,
+                    Address = new Address { Email = Guid.NewGuid().ToString() }
+                };
+                var recipient3 = new Recipient
+                {
+                    Type = RecipientType.CC,
+                    Address = new Address { Email = Guid.NewGuid().ToString() }
+                };
                 var recipient4 = useTo
-                        ? new Recipient { Type = RecipientType.To, Address = new Address { Email = Guid.NewGuid().ToString() } }
-                        : new Recipient();
+                    ? new Recipient
+                    {
+                        Type = RecipientType.To,
+                        Address = new Address { Email = Guid.NewGuid().ToString() }
+                    }
+                    : new Recipient();
 
                 transmission.Recipients = new List<Recipient> { recipient1, recipient2, recipient3, recipient4 };
 
-                var cc = mapper.ToDictionary(transmission)["content"]
-                    .CastAs<IDictionary<string, object>>()["headers"]
-                    .CastAs<IDictionary<string, string>>()["CC"];
+                var cc = mapper.ToDictionary(transmission)["content"].CastAs<IDictionary<string, object>>()["headers"].CastAs<
+                    IDictionary<string, string>
+                >()["CC"];
 
                 Assert.Equal(recipient1.Address.Email + ", " + recipient3.Address.Email, cc);
             }
@@ -342,17 +339,22 @@ namespace SparkPost.Tests
                 var key = Guid.NewGuid().ToString();
                 var value = Guid.NewGuid().ToString();
 
-                var recipient1 = new Recipient { Type = RecipientType.CC, Address = new Address { Email = Guid.NewGuid().ToString() } };
-                var recipient2 = useTo
-                        ? new Recipient { Type = RecipientType.To, Address = new Address() }
-                        : new Recipient();
+                var recipient1 = new Recipient
+                {
+                    Type = RecipientType.CC,
+                    Address = new Address { Email = Guid.NewGuid().ToString() }
+                };
+                var recipient2 = useTo ? new Recipient { Type = RecipientType.To, Address = new Address() } : new Recipient();
                 transmission.Recipients = new List<Recipient> { recipient1, recipient2 };
 
                 transmission.Content.Headers[key] = value;
 
-                Assert.Equal(value, mapper.ToDictionary(transmission)["content"]
-                   .CastAs<IDictionary<string, object>>()["headers"]
-                   .CastAs<IDictionary<string, string>>()[key]);
+                Assert.Equal(
+                    value,
+                    mapper.ToDictionary(transmission)["content"].CastAs<IDictionary<string, object>>()["headers"].CastAs<
+                        IDictionary<string, string>
+                    >()[key]
+                );
             }
 
             [Theory]
@@ -364,17 +366,31 @@ namespace SparkPost.Tests
                 var value = Guid.NewGuid().ToString();
 
                 var recipient1 = useTo
-                        ? new Recipient { Type = RecipientType.To, Address = new Address { Email = Guid.NewGuid().ToString() } }
-                        : new Recipient();
-                var recipient2 = new Recipient { Type = RecipientType.BCC, Address = new Address { Email = Guid.NewGuid().ToString() } };
-                var recipient3 = new Recipient { Type = RecipientType.BCC, Address = new Address { Email = Guid.NewGuid().ToString() } };
+                    ? new Recipient
+                    {
+                        Type = RecipientType.To,
+                        Address = new Address { Email = Guid.NewGuid().ToString() }
+                    }
+                    : new Recipient();
+                var recipient2 = new Recipient
+                {
+                    Type = RecipientType.BCC,
+                    Address = new Address { Email = Guid.NewGuid().ToString() }
+                };
+                var recipient3 = new Recipient
+                {
+                    Type = RecipientType.BCC,
+                    Address = new Address { Email = Guid.NewGuid().ToString() }
+                };
                 transmission.Recipients = new List<Recipient> { recipient1, recipient2, recipient3 };
 
                 transmission.Content.Headers[key] = value;
 
-                Assert.False(mapper.ToDictionary(transmission)["content"]
-                   .CastAs<IDictionary<string, object>>()["headers"]
-                   .CastAs<IDictionary<string, string>>().ContainsKey("CC"));
+                Assert.False(
+                    mapper.ToDictionary(transmission)["content"].CastAs<IDictionary<string, object>>()["headers"]
+                        .CastAs<IDictionary<string, string>>()
+                        .ContainsKey("CC")
+                );
             }
 
             [Theory]
@@ -383,14 +399,20 @@ namespace SparkPost.Tests
             public void It_should_not_set_a_header_value_if_there_are_no_ccs(bool useTo)
             {
                 var recipient1 = useTo
-                        ? new Recipient { Type = RecipientType.To, Address = new Address { Email = Guid.NewGuid().ToString() } }
-                        : new Recipient();
-                var recipient2 = new Recipient { Type = RecipientType.BCC, Address = new Address { Email = Guid.NewGuid().ToString() } };
+                    ? new Recipient
+                    {
+                        Type = RecipientType.To,
+                        Address = new Address { Email = Guid.NewGuid().ToString() }
+                    }
+                    : new Recipient();
+                var recipient2 = new Recipient
+                {
+                    Type = RecipientType.BCC,
+                    Address = new Address { Email = Guid.NewGuid().ToString() }
+                };
                 transmission.Recipients = new List<Recipient> { recipient1, recipient2 };
 
-                Assert.False(mapper.ToDictionary(transmission)["content"]
-                   .CastAs<IDictionary<string, object>>()
-                   .ContainsKey("headers"));
+                Assert.False(mapper.ToDictionary(transmission)["content"].CastAs<IDictionary<string, object>>().ContainsKey("headers"));
             }
 
             [Theory]
@@ -398,16 +420,25 @@ namespace SparkPost.Tests
             [InlineData(false)]
             public void It_should_ignore_empty_ccs(bool useTo)
             {
-                var recipient1 = new Recipient { Type = RecipientType.CC, Address = new Address { Email = "" } };
-                var recipient2 = new Recipient { Type = RecipientType.CC, Address = new Address { Email = null } };
-                var recipient3 = new Recipient { Type = RecipientType.CC, Address = new Address { Email = " " } };
-                var toRecipient = useTo
-                        ? new Recipient { Type = RecipientType.To, Address = new Address() }
-                        : new Recipient();
+                var recipient1 = new Recipient
+                {
+                    Type = RecipientType.CC,
+                    Address = new Address { Email = "" }
+                };
+                var recipient2 = new Recipient
+                {
+                    Type = RecipientType.CC,
+                    Address = new Address { Email = null }
+                };
+                var recipient3 = new Recipient
+                {
+                    Type = RecipientType.CC,
+                    Address = new Address { Email = " " }
+                };
+                var toRecipient = useTo ? new Recipient { Type = RecipientType.To, Address = new Address() } : new Recipient();
                 transmission.Recipients = new List<Recipient> { recipient1, recipient2, recipient3, toRecipient };
 
-                Assert.False(mapper.ToDictionary(transmission)["content"]
-                   .CastAs<IDictionary<string, object>>().ContainsKey("headers"));
+                Assert.False(mapper.ToDictionary(transmission)["content"].CastAs<IDictionary<string, object>>().ContainsKey("headers"));
             }
 
             [Theory]
@@ -416,15 +447,10 @@ namespace SparkPost.Tests
             public void It_should_ignore_any_cc_recipients_with_no_address(bool useTo)
             {
                 var recipient1 = new Recipient { Type = RecipientType.CC, Address = null };
-                var toRecipient = useTo
-                        ? new Recipient { Type = RecipientType.To, Address = new Address() }
-                        : new Recipient();
+                var toRecipient = useTo ? new Recipient { Type = RecipientType.To, Address = new Address() } : new Recipient();
                 transmission.Recipients = new List<Recipient> { recipient1, toRecipient };
 
-                Assert.False(mapper.ToDictionary(transmission)
-                   ["content"]
-                   .CastAs<IDictionary<string, object>>()
-                   .ContainsKey("headers"));
+                Assert.False(mapper.ToDictionary(transmission)["content"].CastAs<IDictionary<string, object>>().ContainsKey("headers"));
             }
 
             [Fact]
@@ -438,11 +464,10 @@ namespace SparkPost.Tests
                 var bccRecipient = new Recipient { Type = RecipientType.BCC, Address = new Address() };
                 transmission.Recipients = new List<Recipient>() { toRecipient, ccRecipient, bccRecipient };
 
-                var addresses = mapper.ToDictionary(transmission)
-                        ["recipients"]
-                        .CastAs<IEnumerable<IDictionary<string, object>>>()
-                        .Select(r => r["address"])
-                        .Cast<IDictionary<string, object>>();
+                var addresses = mapper.ToDictionary(transmission)["recipients"]
+                    .CastAs<IEnumerable<IDictionary<string, object>>>()
+                    .Select(r => r["address"])
+                    .Cast<IDictionary<string, object>>();
 
                 foreach (var address in addresses)
                 {
@@ -462,9 +487,12 @@ namespace SparkPost.Tests
                 var recipient2 = new Recipient { Type = RecipientType.CC, Address = new Address(address, name) };
                 transmission.Recipients = new List<Recipient> { recipient1, recipient2 };
 
-                Assert.Equal(result, mapper.ToDictionary(transmission)["content"]
-                    .CastAs<IDictionary<string, object>>()["headers"]
-                    .CastAs<IDictionary<string, string>>()["CC"]);
+                Assert.Equal(
+                    result,
+                    mapper.ToDictionary(transmission)["content"].CastAs<IDictionary<string, object>>()["headers"].CastAs<
+                        IDictionary<string, string>
+                    >()["CC"]
+                );
             }
 
             [Theory]
@@ -476,9 +504,12 @@ namespace SparkPost.Tests
                 var recipient2 = new Recipient { Type = RecipientType.CC, Address = new Address(address, name) };
                 transmission.Recipients = new List<Recipient> { recipient1, recipient2 };
 
-                Assert.Equal(result, mapper.ToDictionary(transmission)["content"]
-                    .CastAs<IDictionary<string, object>>()["headers"]
-                    .CastAs<IDictionary<string, string>>()["CC"]);
+                Assert.Equal(
+                    result,
+                    mapper.ToDictionary(transmission)["content"].CastAs<IDictionary<string, object>>()["headers"].CastAs<
+                        IDictionary<string, string>
+                    >()["CC"]
+                );
             }
 
             [Theory]
@@ -495,9 +526,9 @@ namespace SparkPost.Tests
                     transmission.Recipients.Add(new Recipient { Type = RecipientType.To, Address = new Address("bob@example.com") });
                 }
 
-                var ccHeader = mapper.ToDictionary(transmission)["content"]
-                    .CastAs<IDictionary<string, object>>()["headers"]
-                    .CastAs<IDictionary<string, string>>()["CC"];
+                var ccHeader = mapper.ToDictionary(transmission)["content"].CastAs<IDictionary<string, object>>()["headers"].CastAs<
+                    IDictionary<string, string>
+                >()["CC"];
 
                 if (numOfTos == 1)
                 {
@@ -516,9 +547,9 @@ namespace SparkPost.Tests
                 transmission.Recipients.Add(new Recipient { Type = RecipientType.CC, Address = new Address(ccAddress) });
                 transmission.Recipients.Add(new Recipient { Type = RecipientType.To, Address = null });
 
-                var ccHeader = mapper.ToDictionary(transmission)["content"]
-                    .CastAs<IDictionary<string, object>>()["headers"]
-                    .CastAs<IDictionary<string, string>>()["CC"];
+                var ccHeader = mapper.ToDictionary(transmission)["content"].CastAs<IDictionary<string, object>>()["headers"].CastAs<
+                    IDictionary<string, string>
+                >()["CC"];
 
                 Assert.Equal($"<{ccAddress}>", ccHeader);
             }
@@ -534,7 +565,7 @@ namespace SparkPost.Tests
                 content = new Content();
                 mapper = new DataMapper("v1");
             }
-            
+
             [Fact]
             public void from()
             {
@@ -595,8 +626,7 @@ namespace SparkPost.Tests
                 var key = Guid.NewGuid().ToString();
                 var value = Guid.NewGuid().ToString();
                 content.Headers[key] = value;
-                Assert.Equal(value, mapper.ToDictionary(content)["headers"]
-                    .CastAs<IDictionary<string, string>>()[key]);
+                Assert.Equal(value, mapper.ToDictionary(content)["headers"].CastAs<IDictionary<string, string>>()[key]);
             }
 
             [Fact]
@@ -665,7 +695,7 @@ namespace SparkPost.Tests
                 options = new Options();
                 mapper = new DataMapper("v1");
             }
-            
+
             [Fact]
             public void It_should_default_to_returning_null()
             {
@@ -676,60 +706,50 @@ namespace SparkPost.Tests
             public void open_tracking()
             {
                 options.OpenTracking = true;
-                Assert.True((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()
-                    ["open_tracking"]);
+                Assert.True((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()["open_tracking"]);
 
                 options.OpenTracking = false;
-                Assert.False((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()
-                    ["open_tracking"]);
+                Assert.False((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()["open_tracking"]);
             }
 
             [Fact]
             public void click_tracking()
             {
                 options.ClickTracking = true;
-                Assert.True((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()
-                    ["click_tracking"]);
+                Assert.True((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()["click_tracking"]);
 
                 options.ClickTracking = false;
-                Assert.False((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()
-                    ["click_tracking"]);
+                Assert.False((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()["click_tracking"]);
             }
 
             [Fact]
             public void transactional()
             {
                 options.Transactional = true;
-                Assert.True((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()
-                    ["transactional"]);
+                Assert.True((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()["transactional"]);
 
                 options.Transactional = false;
-                Assert.False((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()
-                    ["transactional"]);
+                Assert.False((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()["transactional"]);
             }
 
             [Fact]
             public void sandbox()
             {
                 options.Sandbox = true;
-                Assert.True((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()
-                    ["sandbox"]);
+                Assert.True((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()["sandbox"]);
 
                 options.Sandbox = false;
-                Assert.False((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()
-                    ["sandbox"]);
+                Assert.False((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()["sandbox"]);
             }
 
             [Fact]
             public void skip_suppression()
             {
                 options.SkipSuppression = true;
-                Assert.True((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()
-                    ["skip_suppression"]);
+                Assert.True((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()["skip_suppression"]);
 
                 options.SkipSuppression = false;
-                Assert.False((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()
-                    ["skip_suppression"]);
+                Assert.False((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()["skip_suppression"]);
             }
 
             [Fact]
@@ -737,33 +757,28 @@ namespace SparkPost.Tests
             {
                 var startTime = "2015-02-11T08:00:00-04:00";
                 options.StartTime = DateTimeOffset.Parse(startTime);
-                Assert.Equal(startTime, mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()
-                    ["start_time"]);
+                Assert.Equal(startTime, mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()["start_time"]);
 
                 startTime = "2015-02-11T08:00:00-14:00";
                 options.StartTime = DateTimeOffset.Parse(startTime);
-                Assert.Equal(startTime, mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()
-                    ["start_time"]);
+                Assert.Equal(startTime, mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()["start_time"]);
             }
 
             [Fact]
             public void hide_start_time_if_it_is_missing()
             {
                 options.OpenTracking = true;
-                Assert.DoesNotContain("start_time", mapper.ToDictionary(options)
-                    .CastAs<IDictionary<string, object>>().Keys);
+                Assert.DoesNotContain("start_time", mapper.ToDictionary(options).CastAs<IDictionary<string, object>>().Keys);
             }
 
             [Fact]
             public void inline_css()
             {
                 options.InlineCss = true;
-                Assert.True((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()
-                    ["inline_css"]);
+                Assert.True((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()["inline_css"]);
 
                 options.InlineCss = false;
-                Assert.False((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()
-                    ["inline_css"]);
+                Assert.False((bool)mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()["inline_css"]);
             }
 
             [Fact]
@@ -771,8 +786,7 @@ namespace SparkPost.Tests
             {
                 var ipPool = Guid.NewGuid().ToString();
                 options.IpPool = ipPool;
-                Assert.Equal(ipPool, mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()
-                    ["ip_pool"]);
+                Assert.Equal(ipPool, mapper.ToDictionary(options).CastAs<IDictionary<string, object>>()["ip_pool"]);
             }
         }
 
@@ -882,26 +896,15 @@ namespace SparkPost.Tests
                 var authRequestDetails = dictionary["auth_request_details"].CastAs<IDictionary<string, object>>();
                 Assert.Equal("https://oauth.myurl.com/tokens", authRequestDetails["url"]);
 
-                Assert.Equal("<oauth client id>", authRequestDetails["body"]
-                    .CastAs<IDictionary<string, object>>()
-                    ["client_id"]);
+                Assert.Equal("<oauth client id>", authRequestDetails["body"].CastAs<IDictionary<string, object>>()["client_id"]);
 
-                Assert.Equal("<oauth client secret>", authRequestDetails["body"]
-                    .CastAs<IDictionary<string, object>>()
-                    ["client_secret"]);
+                Assert.Equal("<oauth client secret>", authRequestDetails["body"].CastAs<IDictionary<string, object>>()["client_secret"]);
             }
 
             [Fact]
             public void AuthCredentials()
             {
-                var webhook = new Webhook
-                {
-                    AuthCredentials = new
-                    {
-                        access_token = "<oauth token>",
-                        ExpiresIn = 3600
-                    }
-                };
+                var webhook = new Webhook { AuthCredentials = new { access_token = "<oauth token>", ExpiresIn = 3600 } };
 
                 var dictionary = dataMapper.ToDictionary(webhook);
                 var authRequestDetails = dictionary["auth_credentials"] as Dictionary<string, object>;
@@ -909,7 +912,6 @@ namespace SparkPost.Tests
                 Assert.Equal(3600, authRequestDetails["expires_in"]);
             }
         }
-
 
         public class SubaccountTests
         {
@@ -997,8 +999,7 @@ namespace SparkPost.Tests
             {
                 var value = Guid.NewGuid().ToString();
                 relayWebhook.Match = new RelayWebhookMatch { Domain = value };
-                Assert.Equal(value, mapper.ToDictionary(relayWebhook)["match"]
-                    .CastAs<IDictionary<string, object>>()["domain"]);
+                Assert.Equal(value, mapper.ToDictionary(relayWebhook)["match"].CastAs<IDictionary<string, object>>()["domain"]);
             }
 
             [Fact]
@@ -1006,8 +1007,7 @@ namespace SparkPost.Tests
             {
                 var value = Guid.NewGuid().ToString();
                 relayWebhook.Match = new RelayWebhookMatch { Protocol = value };
-                Assert.Equal(value, mapper.ToDictionary(relayWebhook)["match"]
-                    .CastAs<IDictionary<string, object>>()["protocol"]);
+                Assert.Equal(value, mapper.ToDictionary(relayWebhook)["match"].CastAs<IDictionary<string, object>>()["protocol"]);
             }
         }
 
@@ -1028,9 +1028,7 @@ namespace SparkPost.Tests
                 sendingDomain.Status = new SendingDomainStatus();
                 sendingDomain.Status.DkimStatus = DkimStatus.Pending;
 
-                Assert.Equal("pending", mapper.ToDictionary(sendingDomain)["status"]
-                    .CastAs<IDictionary<string, object>>()
-                    ["dkim_status"]);
+                Assert.Equal("pending", mapper.ToDictionary(sendingDomain)["status"].CastAs<IDictionary<string, object>>()["dkim_status"]);
             }
 
             [Fact]
@@ -1046,17 +1044,14 @@ namespace SparkPost.Tests
             {
                 var publicKey = Guid.NewGuid().ToString();
                 sendingDomain.Dkim = new Dkim { PublicKey = publicKey };
-                Assert.Equal(publicKey, mapper.ToDictionary(sendingDomain)["dkim"]
-                                              .CastAs<IDictionary<string, object>>()
-                                              ["public_key"]);
+                Assert.Equal(publicKey, mapper.ToDictionary(sendingDomain)["dkim"].CastAs<IDictionary<string, object>>()["public_key"]);
             }
 
             [Fact]
             public void Null_dkim_is_is_not_returned()
             {
                 sendingDomain.Dkim = null;
-                Assert.False(mapper.ToDictionary(sendingDomain)
-                    .ContainsKey("dkim"));
+                Assert.False(mapper.ToDictionary(sendingDomain).ContainsKey("dkim"));
             }
         }
 

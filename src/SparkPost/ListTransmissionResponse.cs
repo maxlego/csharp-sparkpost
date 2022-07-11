@@ -1,6 +1,4 @@
 ﻿namespace SparkPost
 {
-    public class ListTransmissionResponse : Response
-    {
-    }
+    public class ListTransmissionResponse : Response { }
 }

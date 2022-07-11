@@ -31,10 +31,7 @@ namespace SparkPost
 
         internal static InboundDomain ConvertToAInboundDomain(dynamic item)
         {
-            return new InboundDomain
-            {
-                Domain = item.domain
-            };
+            return new InboundDomain { Domain = item.domain };
         }
     }
 }

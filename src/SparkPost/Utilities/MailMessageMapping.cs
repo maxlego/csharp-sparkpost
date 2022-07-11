@@ -18,21 +18,23 @@ namespace SparkPost.Utilities
             (t, m) => AddRecipients(t, m.Bcc, RecipientType.BCC),
             (t, m) =>
             {
-                if (m.ReplyToList.Any()) t.Content.ReplyTo = m.ReplyToList.First().Address;
+                if (m.ReplyToList.Any())
+                    t.Content.ReplyTo = m.ReplyToList.First().Address;
             },
             (t, m) =>
             {
-                if (m.IsBodyHtml) t.Content.Html = m.Body;
+                if (m.IsBodyHtml)
+                    t.Content.Html = m.Body;
             },
             (t, m) =>
             {
-                if (!m.IsBodyHtml) t.Content.Text = m.Body;
+                if (!m.IsBodyHtml)
+                    t.Content.Text = m.Body;
             },
             (t, m) =>
             {
                 foreach (var attachment in m.Attachments)
-                    t.Content.Attachments
-                        .Add(File.Create<Attachment>(attachment.ContentStream, attachment.ContentType.Name));
+                    t.Content.Attachments.Add(File.Create<Attachment>(attachment.ContentStream, attachment.ContentType.Name));
             },
             (t, m) =>
             {
@@ -69,9 +71,8 @@ namespace SparkPost.Utilities
 
         private static bool AlternativeViewsAreAvailable(AlternateViewCollection views)
         {
-            var textTypes = new[] {MediaTypeNames.Text.Plain, MediaTypeNames.Text.Html};
-            return views.Any() && (views.Count <= 2) &&
-                   !views.Select(av => av.ContentType.MediaType).Except(textTypes).Any();
+            var textTypes = new[] { MediaTypeNames.Text.Plain, MediaTypeNames.Text.Html };
+            return views.Any() && (views.Count <= 2) && !views.Select(av => av.ContentType.MediaType).Except(textTypes).Any();
         }
 
         private static Address ConvertToAddress(MailAddress address)
@@ -108,11 +109,7 @@ namespace SparkPost.Utilities
 
         private static Recipient ConvertToARecipient(RecipientType type, MailAddress address)
         {
-            return new Recipient
-            {
-                Type = type,
-                Address = ConvertToAddress(address)
-            };
+            return new Recipient { Type = type, Address = ConvertToAddress(address) };
         }
     }
 }

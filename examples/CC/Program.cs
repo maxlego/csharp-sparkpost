@@ -1,7 +1,6 @@
 ﻿using System;
 using SparkPost;
 
-
 var apikey = "YOUR_API_KEY";
 var fromAddr = "from-csharp@yourdomain.com";
 var toAddr = "to@you.com";
@@ -9,19 +8,12 @@ var ccAddr = "cc@them.com";
 
 var trans = new Transmission();
 
-var to = new Recipient
-{
-    Address = new Address {Email = toAddr}
-};
+var to = new Recipient { Address = new Address { Email = toAddr } };
 trans.Recipients.Add(to);
 
 var cc = new Recipient
 {
-    Address = new Address
-    {
-        Email = ccAddr,
-        HeaderTo = toAddr
-    }
+    Address = new Address { Email = ccAddr, HeaderTo = toAddr }
 };
 trans.Recipients.Add(cc);
 

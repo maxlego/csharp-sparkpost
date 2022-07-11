@@ -17,11 +17,7 @@ namespace SparkPost
 
         public async Task<EmailValidationResponse> Create(string emailAddress)
         {
-            var request = new Request
-            {
-                Url = $"/api/{client.Version}/recipient-validation/single/{emailAddress}",
-                Method = "GET"
-            };
+            var request = new Request { Url = $"/api/{client.Version}/recipient-validation/single/{emailAddress}", Method = "GET" };
 
             var response = await requestSender.Send(request);
             if (response.StatusCode != HttpStatusCode.OK)

@@ -45,15 +45,13 @@ namespace SparkPost.Tests.RequestSenders
                 };
             }
 
-
             [Fact]
             public async void It_should_return_the_http_response_message_info()
             {
                 var content = Guid.NewGuid().ToString();
-                asyncTesting.SetupTheResponseWith((r, h) => new HttpResponseMessage(HttpStatusCode.Accepted)
-                {
-                    Content = new StringContent(content)
-                });
+                asyncTesting.SetupTheResponseWith(
+                    (r, h) => new HttpResponseMessage(HttpStatusCode.Accepted) { Content = new StringContent(content) }
+                );
 
                 var result = await asyncTesting.Send(request);
                 Assert.Equal(HttpStatusCode.Accepted, result.StatusCode);
@@ -64,10 +62,9 @@ namespace SparkPost.Tests.RequestSenders
             public async Task It_should_return_the_http_response_message_info_take_2()
             {
                 var content = Guid.NewGuid().ToString();
-                asyncTesting.SetupTheResponseWith((r, h) => new HttpResponseMessage(HttpStatusCode.NotFound)
-                {
-                    Content = new StringContent(content)
-                });
+                asyncTesting.SetupTheResponseWith(
+                    (r, h) => new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent(content) }
+                );
 
                 var result = await asyncTesting.Send(request);
                 Assert.Equal(HttpStatusCode.NotFound, result.StatusCode);
@@ -78,11 +75,13 @@ namespace SparkPost.Tests.RequestSenders
             [Fact]
             public async Task It_should_pass_the_api_key()
             {
-                asyncTesting.SetupTheResponseWith((r, h) =>
-                {
-                    Assert.Equal(apiKey, h.DefaultRequestHeaders.Authorization.ToString());
-                    return defaultHttpResponseMessage;
-                });
+                asyncTesting.SetupTheResponseWith(
+                    (r, h) =>
+                    {
+                        Assert.Equal(apiKey, h.DefaultRequestHeaders.Authorization.ToString());
+                        return defaultHttpResponseMessage;
+                    }
+                );
 
                 await asyncTesting.Send(request);
             }
@@ -90,11 +89,13 @@ namespace SparkPost.Tests.RequestSenders
             [Fact]
             public async Task It_should_send_the_request_to_the_appropriate_host()
             {
-                asyncTesting.SetupTheResponseWith((r, h) =>
-                {
-                    Assert.Equal(apiHost + "/", h.BaseAddress.ToString());
-                    return defaultHttpResponseMessage;
-                });
+                asyncTesting.SetupTheResponseWith(
+                    (r, h) =>
+                    {
+                        Assert.Equal(apiHost + "/", h.BaseAddress.ToString());
+                        return defaultHttpResponseMessage;
+                    }
+                );
 
                 await asyncTesting.Send(request);
             }
@@ -103,13 +104,15 @@ namespace SparkPost.Tests.RequestSenders
             public async Task It_should_set_the_subaccount_when_the_subaccount_is_not_zero()
             {
                 client.Setup(x => x.SubaccountId).Returns(345);
-                asyncTesting.SetupTheResponseWith((r, h) =>
-                {
-                    var match = h.DefaultRequestHeaders.First(x => x.Key == "X-MSYS-SUBACCOUNT");
-                    Assert.Single(match.Value);
-                    Assert.Equal("345", match.Value.First());
-                    return defaultHttpResponseMessage;
-                });
+                asyncTesting.SetupTheResponseWith(
+                    (r, h) =>
+                    {
+                        var match = h.DefaultRequestHeaders.First(x => x.Key == "X-MSYS-SUBACCOUNT");
+                        Assert.Single(match.Value);
+                        Assert.Equal("345", match.Value.First());
+                        return defaultHttpResponseMessage;
+                    }
+                );
 
                 await asyncTesting.Send(request);
             }
@@ -118,12 +121,14 @@ namespace SparkPost.Tests.RequestSenders
             public async Task It_should_NOT_set_a_subaccount_when_the_subaccount_is_zero()
             {
                 client.Setup(x => x.SubaccountId).Returns(0);
-                asyncTesting.SetupTheResponseWith((r, h) =>
-                {
-                    var count = h.DefaultRequestHeaders.Count(x => x.Key == "X-MSYS-SUBACCOUNT");
-                    Assert.Equal(0, count);
-                    return defaultHttpResponseMessage;
-                });
+                asyncTesting.SetupTheResponseWith(
+                    (r, h) =>
+                    {
+                        var count = h.DefaultRequestHeaders.Count(x => x.Key == "X-MSYS-SUBACCOUNT");
+                        Assert.Equal(0, count);
+                        return defaultHttpResponseMessage;
+                    }
+                );
 
                 await asyncTesting.Send(request);
             }
@@ -132,9 +137,7 @@ namespace SparkPost.Tests.RequestSenders
             {
                 private Func<Request, HttpClient, HttpResponseMessage> responseBuilder;
 
-                public AsyncTesting(IClient client) : base(client, null)
-                {
-                }
+                public AsyncTesting(IClient client) : base(client, null) { }
 
                 public void SetupTheResponseWith(Func<Request, HttpClient, HttpResponseMessage> responseBuilder)
                 {

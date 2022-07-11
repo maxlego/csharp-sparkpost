@@ -23,7 +23,8 @@
         /// <returns></returns>
         public static SendingDomain ConvertToSendingDomain(dynamic result)
         {
-            return result != null ? new SendingDomain
+            return result != null
+                ? new SendingDomain
                 {
                     Domain = result.domain,
                     TrackingDomain = result.tracking_domain,

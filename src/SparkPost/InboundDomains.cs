@@ -27,7 +27,8 @@ namespace SparkPost
 
         public async Task<ListInboundDomainResponse> List(object query = null)
         {
-            if (query == null) query = new {};
+            if (query == null)
+                query = new { };
             var request = new Request
             {
                 Url = $"/api/{client.Version}/inbound-domains",
@@ -36,21 +37,19 @@ namespace SparkPost
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             return ListInboundDomainResponse.CreateFromResponse(response);
         }
 
         public async Task<InboundDomainResponse> Retrieve(string domain)
         {
-            var request = new Request
-            {
-                Url = $"/api/{client.Version}/inbound-domains/{domain}",
-                Method = "GET"
-            };
+            var request = new Request { Url = $"/api/{client.Version}/inbound-domains/{domain}", Method = "GET" };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             return InboundDomainResponse.CreateFromResponse(response);
         }
@@ -65,7 +64,8 @@ namespace SparkPost
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var createInboundDomainResponse = new Response();
             LeftRight.SetValuesToMatch(createInboundDomainResponse, response);
@@ -74,11 +74,7 @@ namespace SparkPost
 
         public async Task<bool> Delete(string domain)
         {
-            var request = new Request
-            {
-                Url = $"/api/{client.Version}/inbound-domains/{domain}",
-                Method = "DELETE"
-            };
+            var request = new Request { Url = $"/api/{client.Version}/inbound-domains/{domain}", Method = "DELETE" };
 
             var response = await requestSender.Send(request);
             return response.StatusCode == HttpStatusCode.OK;

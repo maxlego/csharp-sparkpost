@@ -43,7 +43,8 @@ namespace SparkPost
         {
             var ccs = GetTheCcEmails(recipients);
 
-            if (ccs.Any() == false) return;
+            if (ccs.Any() == false)
+                return;
 
             string ccHeader = FormatTheCCs(ccs);
             SetTheCcHeader(result, ccHeader);
@@ -79,13 +80,9 @@ namespace SparkPost
             return recipient.Type == RecipientType.CC;
         }
 
-        private static void SetFieldsOnRecipients(IEnumerable<IDictionary<string, object>> recipients,
-                string name, string email)
+        private static void SetFieldsOnRecipients(IEnumerable<IDictionary<string, object>> recipients, string name, string email)
         {
-            var addresses = recipients
-                .Where(r => r.ContainsKey("address"))
-                .Select(r => r["address"])
-                .Cast<IDictionary<string, object>>();
+            var addresses = recipients.Where(r => r.ContainsKey("address")).Select(r => r["address"]).Cast<IDictionary<string, object>>();
 
             foreach (var address in addresses)
             {
@@ -130,8 +127,7 @@ namespace SparkPost
 
         private static void SetThisHeaderValue(IDictionary<string, object> result, string key, string value)
         {
-            ((IDictionary<string, string>) ((IDictionary<string, object>) result["content"])["headers"])
-                [key] = value;
+            ((IDictionary<string, string>)((IDictionary<string, object>)result["content"])["headers"])[key] = value;
         }
     }
 }

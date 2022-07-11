@@ -53,7 +53,6 @@ namespace SparkPost.Tests
             {
                 Assert.NotNull(new MessageEventsQuery().TransmissionIds);
             }
-
         }
     }
 }

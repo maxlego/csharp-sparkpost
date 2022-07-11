@@ -11,7 +11,7 @@ namespace SparkPost.Acceptance
         {
             _scenarioContext = scenarioContext;
         }
-        
+
         [Given(@"my api key is '(.*)'")]
         public void GivenMyApiKeyIs(string apiKey)
         {

@@ -9,6 +9,7 @@ namespace SparkPost.RequestSenders
     {
         Task<Response> Send(Request request);
     }
+
     public class RequestSender : IRequestSender
     {
         private readonly IClient client;
@@ -30,8 +31,7 @@ namespace SparkPost.RequestSenders
                 SetTheUserAgentIfItIsProvided(httpClient);
 
                 if (client.SubaccountId != 0)
-                    httpClient.DefaultRequestHeaders.Add("X-MSYS-SUBACCOUNT",
-                        client.SubaccountId.ToString(CultureInfo.InvariantCulture));
+                    httpClient.DefaultRequestHeaders.Add("X-MSYS-SUBACCOUNT", client.SubaccountId.ToString(CultureInfo.InvariantCulture));
 
                 var result = await GetTheResponse(request, httpClient);
 
@@ -52,9 +52,7 @@ namespace SparkPost.RequestSenders
 
         protected virtual async Task<HttpResponseMessage> GetTheResponse(Request request, HttpClient httpClient)
         {
-            return await new RequestMethodFinder(httpClient, dataMapper)
-                .FindFor(request)
-                .Execute(request);
+            return await new RequestMethodFinder(httpClient, dataMapper).FindFor(request).Execute(request);
         }
     }
 }

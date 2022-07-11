@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace SparkPost
 {
-    public class Metrics: IMetrics
+    public class Metrics : IMetrics
     {
         private readonly IClient client;
         private readonly IRequestSender requestSender;
 
         public Metrics(IClient client, IRequestSender requestSender)
-        {            
+        {
             this.client = client;
             this.requestSender = requestSender;
         }
@@ -239,7 +239,7 @@ namespace SparkPost
         }
 
         /// <summary>
-        /// Returns a list of IP pools that the Metrics API contains data on.   
+        /// Returns a list of IP pools that the Metrics API contains data on.
         /// </summary>
         /// <param name="metricsSimpleQuery"></param>
         /// <returns></returns>
@@ -264,7 +264,7 @@ namespace SparkPost
         /// <returns></returns>
         public async Task<GetMetricsResourceResponse> GetSendingIps(object metricsSimpleQuery)
         {
-            return await GetMetricsResource("sending-ips", metricsSimpleQuery);            
+            return await GetMetricsResource("sending-ips", metricsSimpleQuery);
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace SparkPost
             var result = new GetMetricsResourceResponse(response);
             result.Results = ConvertToStrings(content.results, resourceName);
 
-            return result;            
+            return result;
         }
 
         private async Task<GetMetricsResponse> GetMetrics(string relUrl, object query)
@@ -321,25 +321,28 @@ namespace SparkPost
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
             return response;
         }
 
         private IList<string> ConvertToStrings(dynamic input, string propName)
         {
             var result = new List<string>();
-            if (input == null) return result;
+            if (input == null)
+                return result;
 
             foreach (var item in input[propName])
                 result.Add((string)item);
-            
+
             return result;
         }
 
         private IList<IDictionary<string, object>> ConvertToDictionaries(dynamic input)
         {
             var result = new List<IDictionary<string, object>>();
-            if (input == null) return result;
+            if (input == null)
+                return result;
 
             foreach (var array in input)
             {

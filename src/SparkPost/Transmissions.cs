@@ -30,7 +30,8 @@ namespace SparkPost
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var results = Jsonification.DeserializeObject<dynamic>(response.Content).results;
             return new SendTransmissionResponse()
@@ -46,15 +47,11 @@ namespace SparkPost
 
         public async Task<RetrieveTransmissionResponse> Retrieve(string transmissionId)
         {
-            var request = new Request
-            {
-                Url = $"api/{client.Version}/transmissions/" + transmissionId,
-                Method = "GET",
-            };
+            var request = new Request { Url = $"api/{client.Version}/transmissions/" + transmissionId, Method = "GET", };
 
             var response = await requestSender.Send(request);
 
-            if (new[] {HttpStatusCode.OK, HttpStatusCode.NotFound}.Contains(response.StatusCode) == false)
+            if (new[] { HttpStatusCode.OK, HttpStatusCode.NotFound }.Contains(response.StatusCode) == false)
                 throw new ResponseException(response);
 
             var transmissionResponse = new RetrieveTransmissionResponse()
@@ -67,7 +64,8 @@ namespace SparkPost
             try
             {
                 var results = Jsonification.DeserializeObject<dynamic>(response.Content).results;
-                if (results.transmission == null) return transmissionResponse;
+                if (results.transmission == null)
+                    return transmissionResponse;
 
                 transmissionResponse.Id = results.transmission.id;
                 transmissionResponse.Description = results.transmission.description;
@@ -87,14 +85,11 @@ namespace SparkPost
 
         public async Task<ListTransmissionResponse> List()
         {
-            var request = new Request
-            {
-                Url = $"api/{client.Version}/transmissions",
-                Method = "GET",
-            };
+            var request = new Request { Url = $"api/{client.Version}/transmissions", Method = "GET", };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var transmissionResponse = new ListTransmissionResponse()
             {

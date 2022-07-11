@@ -144,6 +144,5 @@
         /// Relayed message has reached the maximum retry threshold and will be removed from the system.
         /// </summary>
         RelayPermfail
-
     }
 }

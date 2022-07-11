@@ -21,11 +21,7 @@ namespace SparkPost
 
         public async Task<JsonEventResponse> Get(string cursor = "initial", int perPage = 1000)
         {
-            var request = new Request
-            {
-                Url = $"api/{client.Version}/events/message?perPage={perPage}&cursor={cursor}",
-                Method = "GET"
-            };
+            var request = new Request { Url = $"api/{client.Version}/events/message?perPage={perPage}&cursor={cursor}", Method = "GET" };
 
             var response = await requestSender.Send(request);
             if (response.StatusCode != HttpStatusCode.OK)
@@ -35,6 +31,7 @@ namespace SparkPost
             var results = Jsonification.DeserializeObject<JsonEventResponse>(response.Content);
             return results;
         }
+
         public async Task<JsonEventResponse> GetEventsSince(DateTime fromTime, int perPage = 1000)
         {
             var request = new Request
@@ -54,11 +51,7 @@ namespace SparkPost
 
         public async Task<JsonEventResponse> GetEventsNext(string nextUri)
         {
-            var request = new Request
-            {
-                Url = nextUri,
-                Method = "GET"
-            };
+            var request = new Request { Url = nextUri, Method = "GET" };
 
             var response = await requestSender.Send(request);
             if (response.StatusCode != HttpStatusCode.OK)
@@ -74,15 +67,14 @@ namespace SparkPost
     {
         [JsonProperty("results")]
         public JObject[] Results { get; set; }
+
         [JsonProperty("total_count")]
         public int TotalCount { get; set; }
         public Links Links { get; set; }
-
     }
 
     public class Links
     {
         public string Next { get; set; }
     }
-
 }

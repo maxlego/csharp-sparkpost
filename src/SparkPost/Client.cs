@@ -10,20 +10,11 @@ namespace SparkPost
     {
         private const string defaultApiHost = "https://api.sparkpost.com";
 
-        public Client(string apiKey) : this(apiKey, defaultApiHost, 0)
-        {
+        public Client(string apiKey) : this(apiKey, defaultApiHost, 0) { }
 
-        }
+        public Client(string apiKey, string apiHost) : this(apiKey, apiHost, 0) { }
 
-        public Client(string apiKey, string apiHost) : this(apiKey, apiHost, 0)
-        {
-
-        }
-
-        public Client(string apiKey, long subAccountId) : this(apiKey, defaultApiHost, subAccountId)
-        {
-
-        }
+        public Client(string apiKey, long subAccountId) : this(apiKey, defaultApiHost, subAccountId) { }
 
         public Client(string apiKey, string apiHost, long subAccountId)
         {
@@ -117,10 +108,7 @@ namespace SparkPost
 
             private static string AttemptToPullTheVersionNumberOutOf(string value)
             {
-                return value.SplitOn("Version=")[1]
-                    .SplitOn(",")[0]
-                    .SplitOn(".").Take(3)
-                    .JoinWith(".");
+                return value.SplitOn("Version=")[1].SplitOn(",")[0].SplitOn(".").Take(3).JoinWith(".");
             }
         }
     }

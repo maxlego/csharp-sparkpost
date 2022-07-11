@@ -24,7 +24,8 @@ namespace SparkPost
 
         public async Task<ListMessageEventsResponse> List(object messageEventsQuery)
         {
-            if (messageEventsQuery == null) messageEventsQuery = new { };
+            if (messageEventsQuery == null)
+                messageEventsQuery = new { };
 
             var request = new Request
             {
@@ -34,7 +35,8 @@ namespace SparkPost
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             dynamic content = Jsonification.DeserializeObject<dynamic>(response.Content);
 
@@ -53,14 +55,11 @@ namespace SparkPost
 
         public async Task<MessageEventSampleResponse> SamplesOf(string events)
         {
-            var request = new Request
-            {
-                Url = $"/api/{client.Version}/message-events/events/samples?events={events}",
-                Method = "GET"
-            };
+            var request = new Request { Url = $"/api/{client.Version}/message-events/events/samples?events={events}", Method = "GET" };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             return new MessageEventSampleResponse
             {
@@ -74,15 +73,12 @@ namespace SparkPost
         {
             var links = new List<PageLink>();
 
-            if (page_links == null) return links;
+            if (page_links == null)
+                return links;
 
             foreach (var page_link in page_links)
             {
-                links.Add(new PageLink
-                {
-                    Href = page_link.href,
-                    Type = page_link.rel
-                });
+                links.Add(new PageLink { Href = page_link.href, Type = page_link.rel });
             }
             return links;
         }
@@ -91,53 +87,52 @@ namespace SparkPost
         {
             var messageEvents = new List<MessageEvent>();
 
-            if (results == null) return messageEvents;
+            if (results == null)
+                return messageEvents;
 
             foreach (var result in results)
             {
-                var metadata =
-                    Jsonification.DeserializeObject<Dictionary<string, string>>(
-                        Jsonification.SerializeObject(result.rcpt_meta));
-                var tags =
-                    Jsonification.DeserializeObject<List<string>>(
-                        Jsonification.SerializeObject(result.rcpt_tags));
-                messageEvents.Add(new MessageEvent
-                {
-                    Type = result.type,
-                    BounceClass = result.bounce_class,
-                    CampaignId = result.campaign_id,
-                    CustomerId = result.customer_id,
-                    DeliveryMethod = result.delv_method,
-                    DeviceToken = result.device_token,
-                    ErrorCode = result.error_code,
-                    IpAddress = result.ip_address,
-                    MessageId = result.message_id,
-                    MessageFrom = result.msg_from,
-                    MessageSize = result.msg_size,
-                    NumberOfRetries = result.num_retries,
-                    RecipientTo = result.rcpt_to,
-                    RecipientType = result.rcpt_type,
-                    RawReason = result.raw_reason,
-                    Reason = result.reason,
-                    RoutingDomain = result.routing_domain,
-                    Subject = result.subject,
-                    TemplateId = result.template_id,
-                    TemplateVersion = result.template_version,
-                    Timestamp = result.timestamp,
-                    TransmissionId = result.transmission_id,
-                    EventId = result.event_id,
-                    FriendlyFrom = result.friendly_from,
-                    IpPool = result.ip_pool,
-                    QueueTime = result.queue_time,
-                    RawRecipientTo = result.raw_rcpt_to,
-                    SendingIp = result.sending_ip,
-                    TDate = result.tdate,
-                    Transactional = result.transactional,
-                    RemoteAddress = result.remote_addr,
-                    Metadata = metadata,
-                    TargetLinkUrl = result.target_link_url,
-                    Tags = tags
-                });
+                var metadata = Jsonification.DeserializeObject<Dictionary<string, string>>(Jsonification.SerializeObject(result.rcpt_meta));
+                var tags = Jsonification.DeserializeObject<List<string>>(Jsonification.SerializeObject(result.rcpt_tags));
+                messageEvents.Add(
+                    new MessageEvent
+                    {
+                        Type = result.type,
+                        BounceClass = result.bounce_class,
+                        CampaignId = result.campaign_id,
+                        CustomerId = result.customer_id,
+                        DeliveryMethod = result.delv_method,
+                        DeviceToken = result.device_token,
+                        ErrorCode = result.error_code,
+                        IpAddress = result.ip_address,
+                        MessageId = result.message_id,
+                        MessageFrom = result.msg_from,
+                        MessageSize = result.msg_size,
+                        NumberOfRetries = result.num_retries,
+                        RecipientTo = result.rcpt_to,
+                        RecipientType = result.rcpt_type,
+                        RawReason = result.raw_reason,
+                        Reason = result.reason,
+                        RoutingDomain = result.routing_domain,
+                        Subject = result.subject,
+                        TemplateId = result.template_id,
+                        TemplateVersion = result.template_version,
+                        Timestamp = result.timestamp,
+                        TransmissionId = result.transmission_id,
+                        EventId = result.event_id,
+                        FriendlyFrom = result.friendly_from,
+                        IpPool = result.ip_pool,
+                        QueueTime = result.queue_time,
+                        RawRecipientTo = result.raw_rcpt_to,
+                        SendingIp = result.sending_ip,
+                        TDate = result.tdate,
+                        Transactional = result.transactional,
+                        RemoteAddress = result.remote_addr,
+                        Metadata = metadata,
+                        TargetLinkUrl = result.target_link_url,
+                        Tags = tags
+                    }
+                );
             }
             return messageEvents;
         }

@@ -23,13 +23,9 @@ namespace SparkPost
 
         public IRequestMethod FindFor(Request request)
         {
-            return new List<IRequestMethod>
-            {
-                new Delete(client),
-                new Post(client),
-                new Put(client),
-                new Get(client, dataMapper)
-            }.First(x => x.CanExecute(request));
+            return new List<IRequestMethod> { new Delete(client), new Post(client), new Put(client), new Get(client, dataMapper) }.First(
+                x => x.CanExecute(request)
+            );
         }
     }
 }

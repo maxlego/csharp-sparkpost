@@ -1,6 +1,5 @@
 ﻿namespace SparkPost
 {
-
     public class SubaccountCreate
     {
         public string Name { get; set; }

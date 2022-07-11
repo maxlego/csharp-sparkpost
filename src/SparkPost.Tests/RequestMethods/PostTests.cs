@@ -20,35 +20,35 @@ namespace SparkPost.Tests.RequestMethods
             [Fact]
             public void It_should_return_true_for_post()
             {
-                var request = new Request {Method = "POST"};
+                var request = new Request { Method = "POST" };
                 Assert.True(post.CanExecute(request));
             }
 
             [Fact]
             public void It_should_return_true_for_post_lower()
             {
-                var request = new Request {Method = "post"};
+                var request = new Request { Method = "post" };
                 Assert.True(post.CanExecute(request));
             }
 
             [Fact]
             public void It_should_return_true_for_post_spaces()
             {
-                var request = new Request {Method = "post  "};
+                var request = new Request { Method = "post  " };
                 Assert.True(post.CanExecute(request));
             }
 
             [Fact]
             public void It_should_return_false_for_others()
             {
-                var request = new Request {Method = Guid.NewGuid().ToString()};
+                var request = new Request { Method = Guid.NewGuid().ToString() };
                 Assert.False(post.CanExecute(request));
             }
 
             [Fact]
             public void It_should_return_false_for_nil()
             {
-                var request = new Request {Method = null};
+                var request = new Request { Method = null };
                 Assert.False(post.CanExecute(request));
             }
         }
