@@ -1,49 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
+using SparkPost;
 
-namespace SparkPost.Examples
+var apikey = "YOUR_API_KEY";
+var fromAddr = "from-csharp@yourdomain.com";
+var toAddr = "to@you.com";
+
+var trans = new Transmission();
+
+var to = new Recipient
 {
-    internal class SendInline
-    {
-        public static void Main(string[] args)
-        {
-            var settings = ConfigurationManager.AppSettings;
-            var fromAddr = settings["fromaddr"];
-            var toAddr = settings["toaddr"];
+    Address = new Address { Email = toAddr },
+    SubstitutionData = new Dictionary<string, object> { { "firstName", "Jane" } }
+};
 
-            var trans = new Transmission();
+trans.Recipients.Add(to);
 
-            var to = new Recipient
-            {
-                Address = new Address
-                {
-                    Email = toAddr
-                },
-                SubstitutionData = new Dictionary<string, object>
-                {
-                    {"firstName", "Jane"}
-                }
-            };
+trans.SubstitutionData["firstName"] = "Oh Ye Of Little Name";
 
-            trans.Recipients.Add(to);
+trans.Content.From.Email = fromAddr;
+trans.Content.Subject = "SparkPost online content example";
+trans.Content.Text = "Greetings {{firstName or 'recipient'}}\nHello from C# land.";
+trans.Content.Html = "<html><body><h2>Greetings {{firstName or 'recipient'}}</h2><p>Hello from C# land.</p></body></html>";
 
-            trans.SubstitutionData["firstName"] = "Oh Ye Of Little Name";
+Console.Write("Sending mail...");
 
-            trans.Content.From.Email = fromAddr;
-            trans.Content.Subject = "SparkPost online content example";
-            trans.Content.Text = "Greetings {{firstName or 'recipient'}}\nHello from C# land.";
-            trans.Content.Html =
-                "<html><body><h2>Greetings {{firstName or 'recipient'}}</h2><p>Hello from C# land.</p></body></html>";
+var client = new Client(apikey);
 
-            Console.Write("Sending mail...");
+var response = await client.Transmissions.Send(trans);
 
-            var client = new Client(settings["apikey"]);
-            client.CustomSettings.SendingMode = SendingModes.Sync;
-
-            var response = client.Transmissions.Send(trans);
-
-            Console.WriteLine("done");
-        }
-    }
-}
+Console.WriteLine("done");

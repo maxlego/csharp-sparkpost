@@ -10,20 +10,11 @@ namespace SparkPost
     {
         private const string defaultApiHost = "https://api.sparkpost.com";
 
-        public Client(string apiKey) : this(apiKey, defaultApiHost, 0)
-        {
+        public Client(string apiKey) : this(apiKey, defaultApiHost, 0) { }
 
-        }
+        public Client(string apiKey, string apiHost) : this(apiKey, apiHost, 0) { }
 
-        public Client(string apiKey, string apiHost) : this(apiKey, apiHost, 0)
-        {
-
-        }
-
-        public Client(string apiKey, long subAccountId) : this(apiKey, defaultApiHost, subAccountId)
-        {
-
-        }
+        public Client(string apiKey, long subAccountId) : this(apiKey, defaultApiHost, subAccountId) { }
 
         public Client(string apiKey, string apiHost, long subAccountId)
         {
@@ -32,9 +23,7 @@ namespace SparkPost
             SubaccountId = subAccountId;
 
             var dataMapper = new DataMapper(Version);
-            var asyncRequestSender = new AsyncRequestSender(this, dataMapper);
-            var syncRequestSender = new SyncRequestSender(asyncRequestSender);
-            var requestSender = new RequestSender(asyncRequestSender, syncRequestSender, this);
+            var requestSender = new RequestSender(this, dataMapper);
 
             SendingDomains = new SendingDomains(this, requestSender, dataMapper);
             Transmissions = new Transmissions(this, requestSender, dataMapper);
@@ -93,7 +82,6 @@ namespace SparkPost
                     UserAgent = $"csharp-sparkpost/{currentVersion}";
             }
 
-            public SendingModes SendingMode { get; set; }
             public string UserAgent { get; set; }
 
             public HttpClient CreateANewHttpClient()
@@ -120,10 +108,7 @@ namespace SparkPost
 
             private static string AttemptToPullTheVersionNumberOutOf(string value)
             {
-                return value.SplitOn("Version=")[1]
-                    .SplitOn(",")[0]
-                    .SplitOn(".").Take(3)
-                    .JoinWith(".");
+                return value.SplitOn("Version=")[1].SplitOn(",")[0].SplitOn(".").Take(3).JoinWith(".");
             }
         }
     }

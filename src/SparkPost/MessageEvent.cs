@@ -51,12 +51,11 @@ namespace SparkPost
             get
             {
                 int bounceClassAsInt;
-                if (!int.TryParse(BounceClass, out bounceClassAsInt)) return SparkPost.BounceClass.Undefined;
+                if (!int.TryParse(BounceClass, out bounceClassAsInt))
+                    return SparkPost.BounceClass.Undefined;
                 // note:  these scare me, perhaps we should check that it is valid?
                 var bounceClass = (BounceClass)bounceClassAsInt;
-                return bounceClass.ToString() == bounceClassAsInt.ToString()
-                    ? SparkPost.BounceClass.Undefined
-                    : bounceClass;
+                return bounceClass.ToString() == bounceClassAsInt.ToString() ? SparkPost.BounceClass.Undefined : bounceClass;
             }
         }
 
@@ -137,7 +136,11 @@ namespace SparkPost
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("Use MessageEvent.MessageFrom.")]
-        public string MessageForm { get { return MessageFrom; } set { MessageFrom = value; } }
+        public string MessageForm
+        {
+            get { return MessageFrom; }
+            set { MessageFrom = value; }
+        }
 
         /// <summary>
         /// "msg_size": {

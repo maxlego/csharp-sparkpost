@@ -28,7 +28,8 @@ namespace SparkPost
 
         public async Task<ListRelayWebhookResponse> List(object query = null)
         {
-            if (query == null) query = new {};
+            if (query == null)
+                query = new { };
             var request = new Request
             {
                 Url = $"/api/{client.Version}/relay-webhooks",
@@ -37,21 +38,19 @@ namespace SparkPost
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             return ListRelayWebhookResponse.CreateFromResponse(response);
         }
 
         public async Task<RetrieveRelayWebhookResponse> Retrieve(string id)
         {
-            var request = new Request
-            {
-                Url = $"/api/{client.Version}/relay-webhooks/{id}",
-                Method = "GET"
-            };
+            var request = new Request { Url = $"/api/{client.Version}/relay-webhooks/{id}", Method = "GET" };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             return RetrieveRelayWebhookResponse.CreateFromResponse(response);
         }
@@ -66,7 +65,8 @@ namespace SparkPost
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var createWebhookResponse = new Response();
             LeftRight.SetValuesToMatch(createWebhookResponse, response);
@@ -83,7 +83,8 @@ namespace SparkPost
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var createWebhookResponse = new Response();
             LeftRight.SetValuesToMatch(createWebhookResponse, response);
@@ -92,11 +93,7 @@ namespace SparkPost
 
         public async Task<bool> Delete(string id)
         {
-            var request = new Request
-            {
-                Url = $"/api/{client.Version}/relay-webhooks/{id}",
-                Method = "DELETE"
-            };
+            var request = new Request { Url = $"/api/{client.Version}/relay-webhooks/{id}", Method = "DELETE" };
 
             var response = await requestSender.Send(request);
             return response.StatusCode == HttpStatusCode.OK;

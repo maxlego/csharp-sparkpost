@@ -30,7 +30,8 @@ namespace SparkPost
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var results = JsonConvert.DeserializeObject<dynamic>(response.Content).results;
             return new CreateTemplateResponse()
@@ -44,11 +45,7 @@ namespace SparkPost
 
         public async Task<RetrieveTemplateResponse> Retrieve(string templateId, bool? draft = null)
         {
-            var request = new Request
-            {
-                Url = $"api/{client.Version}/templates/{templateId}",
-                Method = "GET"
-            };
+            var request = new Request { Url = $"api/{client.Version}/templates/{templateId}", Method = "GET" };
 
             if (draft != null)
             {
@@ -57,10 +54,11 @@ namespace SparkPost
             }
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var results = JsonConvert.DeserializeObject<dynamic>(response.Content).results;
-            
+
             Dictionary<string, string> Headers = new Dictionary<string, string>();
             if (results.content.headers != null)
             {
@@ -89,11 +87,7 @@ namespace SparkPost
                 },
                 TemplateContent = new TemplateContent()
                 {
-                    From = new Address()
-                    {
-                        Email = results.content.from.email,
-                        Name = results.content.from.name
-                    },
+                    From = new Address() { Email = results.content.from.email, Name = results.content.from.name },
                     Subject = results.content.subject,
                     ReplyTo = (results.content.reply_to == null) ? null : results.content.reply_to,
                     Text = (results.content.text == null) ? null : results.content.text,
@@ -105,27 +99,26 @@ namespace SparkPost
 
         public async Task<RetrieveTemplatesResponse> List()
         {
-            var request = new Request
-            {
-                Url = $"api/{client.Version}/templates",
-                Method = "GET"
-            };
+            var request = new Request { Url = $"api/{client.Version}/templates", Method = "GET" };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var results = JsonConvert.DeserializeObject<dynamic>(response.Content).results;
 
             var templates = new List<TemplateListItem>();
             foreach (var result in results)
-                templates.Add(new TemplateListItem
-                {
-                    Id = result.id,
-                    Name = result.name,
-                    LastUpdateTime = result.last_update_time,
-                    Description = result.description,
-                    Published = result.published
-                });
+                templates.Add(
+                    new TemplateListItem
+                    {
+                        Id = result.id,
+                        Name = result.name,
+                        LastUpdateTime = result.last_update_time,
+                        Description = result.description,
+                        Published = result.published
+                    }
+                );
 
             return new RetrieveTemplatesResponse
             {
@@ -138,11 +131,7 @@ namespace SparkPost
 
         public async Task<bool> Delete(string templateId)
         {
-            var request = new Request
-            {
-                Url = $"api/{client.Version}/templates/{templateId}",
-                Method = "DELETE"
-            };
+            var request = new Request { Url = $"api/{client.Version}/templates/{templateId}", Method = "DELETE" };
 
             var response = await requestSender.Send(request);
             return response.StatusCode == HttpStatusCode.OK;

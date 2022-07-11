@@ -27,7 +27,7 @@ namespace SparkPost.Acceptance
         public void GivenIAddToTheRecipientList(string email)
         {
             var recipientList = scenarioContext.Get<RecipientList>();
-            recipientList.Recipients.Add(new Recipient {Address = new Address {Email = email}});
+            recipientList.Recipients.Add(new Recipient { Address = new Address { Email = email } });
         }
 
         [Given(@"I clear the recipients on the recipient list")]
@@ -89,9 +89,7 @@ namespace SparkPost.Acceptance
         [Then(@"it should have the following recipients")]
         public void ThenItShouldHaveTheFollowingRecipients(Table table)
         {
-            var recipientLists = scenarioContext.Get<RecipientList>()
-                .Recipients
-                .Select(x => new {x.Address.Email});
+            var recipientLists = scenarioContext.Get<RecipientList>().Recipients.Select(x => new { x.Address.Email });
             table.CompareToSet(recipientLists);
         }
     }

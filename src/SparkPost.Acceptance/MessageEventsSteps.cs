@@ -18,7 +18,7 @@ namespace SparkPost.Acceptance
         {
             var client = _scenarioContext.Get<IClient>();
 
-            MessageEventSampleResponse response = await client.MessageEvents.SamplesOf(events); 
+            MessageEventSampleResponse response = await client.MessageEvents.SamplesOf(events);
 
             _scenarioContext.Set(response);
             _scenarioContext.Set<Response>(response);

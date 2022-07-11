@@ -6,9 +6,7 @@ namespace SparkPost.RequestMethods
 {
     public class Post : PutAndPostAreTheSame
     {
-        public Post(HttpClient client) : base(client)
-        {
-        }
+        public Post(HttpClient client) : base(client) { }
 
         public override Task<HttpResponseMessage> Execute(string url, StringContent stringContent)
         {

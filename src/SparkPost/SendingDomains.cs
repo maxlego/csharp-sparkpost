@@ -22,14 +22,11 @@ namespace SparkPost
 
         public async Task<ListSendingDomainResponse> List()
         {
-            var request = new Request
-            {
-                Url = $"/api/{client.Version}/sending-domains", 
-                Method = "GET"
-            };
+            var request = new Request { Url = $"/api/{client.Version}/sending-domains", Method = "GET" };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             return ListSendingDomainResponse.CreateFromResponse(response);
         }
@@ -38,16 +35,18 @@ namespace SparkPost
         {
             var request = new Request
             {
-                Url = $"/api/{client.Version}/sending-domains", 
+                Url = $"/api/{client.Version}/sending-domains",
                 Method = "POST",
                 Data = dataMapper.ToDictionary(sendingDomain)
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var result = Jsonification.DeserializeObject<dynamic>(response.Content).results;
-            return result != null ? new CreateSendingDomainResponse
+            return result != null
+                ? new CreateSendingDomainResponse
                 {
                     ReasonPhrase = response.ReasonPhrase,
                     StatusCode = response.StatusCode,
@@ -62,16 +61,18 @@ namespace SparkPost
         {
             var request = new Request
             {
-                Url = $"/api/{client.Version}/sending-domains/{sendingDomain.Domain}", 
+                Url = $"/api/{client.Version}/sending-domains/{sendingDomain.Domain}",
                 Method = "PUT",
                 Data = dataMapper.ToDictionary(sendingDomain)
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var result = Jsonification.DeserializeObject<dynamic>(response.Content).results;
-            return result != null ? new UpdateSendingDomainResponse
+            return result != null
+                ? new UpdateSendingDomainResponse
                 {
                     ReasonPhrase = response.ReasonPhrase,
                     StatusCode = response.StatusCode,
@@ -85,14 +86,11 @@ namespace SparkPost
 
         public async Task<GetSendingDomainResponse> Retrieve(string domain)
         {
-            var request = new Request
-            {
-                Url = $"/api/{client.Version}/sending-domains/{domain}", 
-                Method = "GET",
-            };
+            var request = new Request { Url = $"/api/{client.Version}/sending-domains/{domain}", Method = "GET", };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
             var result = Jsonification.DeserializeObject<dynamic>(response.Content).results;
             return new GetSendingDomainResponse
             {
@@ -105,11 +103,7 @@ namespace SparkPost
 
         public async Task<Response> Delete(string domain)
         {
-            var request = new Request
-            {
-                Url = $"/api/{client.Version}/sending-domains/{domain}",
-                Method = "DELETE",
-            };
+            var request = new Request { Url = $"/api/{client.Version}/sending-domains/{domain}", Method = "DELETE", };
 
             var response = await requestSender.Send(request);
             if (response.StatusCode == HttpStatusCode.NoContent)
@@ -118,7 +112,8 @@ namespace SparkPost
                 response.ReasonPhrase = ReasonPhrases.GetReasonPhrase((int)HttpStatusCode.OK);
             }
 
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
             return response;
         }
 
@@ -132,7 +127,8 @@ namespace SparkPost
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var result = Jsonification.DeserializeObject<dynamic>(response.Content).results;
 

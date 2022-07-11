@@ -1,6 +1,4 @@
 ﻿namespace SparkPost
 {
-    public class MessageEventSampleResponse : Response
-    {
-    }
+    public class MessageEventSampleResponse : Response { }
 }

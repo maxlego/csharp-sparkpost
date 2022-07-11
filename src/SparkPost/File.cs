@@ -13,7 +13,7 @@ namespace SparkPost
         public static T Create<T>(string filename) where T : File, new()
         {
             var content = System.IO.File.ReadAllBytes(filename);
-            return Create<T>(content, Path.GetFileName(filename));            
+            return Create<T>(content, Path.GetFileName(filename));
         }
 
         public static T Create<T>(string filename, string name) where T : File, new()
@@ -36,7 +36,8 @@ namespace SparkPost
                 result.Data = Convert.ToBase64String(content);
                 result.Type = MimeMapping.MimeUtility.GetMimeMapping(name);
                 result.Name = name;
-            };
+            }
+            ;
             return result;
         }
 

@@ -1,4 +1,3 @@
-
 using SparkPost.Utilities;
 
 namespace SparkPost

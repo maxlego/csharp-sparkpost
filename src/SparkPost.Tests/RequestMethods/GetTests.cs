@@ -22,35 +22,35 @@ namespace SparkPost.Tests.RequestMethods
             [Fact]
             public void It_should_return_true_for_get()
             {
-                var request = new Request {Method = "GET"};
+                var request = new Request { Method = "GET" };
                 Assert.True(get.CanExecute(request));
             }
 
             [Fact]
             public void It_should_return_true_for_get_lower()
             {
-                var request = new Request {Method = "get"};
+                var request = new Request { Method = "get" };
                 Assert.True(get.CanExecute(request));
             }
 
             [Fact]
             public void It_should_return_true_for_get_spacing()
             {
-                var request = new Request {Method = "get "};
+                var request = new Request { Method = "get " };
                 Assert.True(get.CanExecute(request));
             }
 
             [Fact]
             public void It_should_return_false_for_others()
             {
-                var request = new Request {Method = Guid.NewGuid().ToString()};
+                var request = new Request { Method = Guid.NewGuid().ToString() };
                 Assert.False(get.CanExecute(request));
             }
 
             [Fact]
             public void It_should_return_false_for_null()
             {
-                var request = new Request {Method = null};
+                var request = new Request { Method = null };
                 Assert.False(get.CanExecute(request));
             }
         }

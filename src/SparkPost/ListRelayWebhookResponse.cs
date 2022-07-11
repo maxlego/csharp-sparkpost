@@ -37,11 +37,7 @@ namespace SparkPost
                 Name = item.name,
                 Target = item.target,
                 AuthToken = item.auth_token,
-                Match = new RelayWebhookMatch
-                {
-                    Protocol = item.match.protocol,
-                    Domain = item.match.domain
-                }
+                Match = new RelayWebhookMatch { Protocol = item.match.protocol, Domain = item.match.domain }
             };
         }
     }

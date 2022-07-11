@@ -14,16 +14,12 @@ namespace SparkPost.Acceptance
         {
             _scenarioContext = scenarioContext;
         }
-        
+
         [When(@"I query my deliverability for (.*)")]
         public async Task WhenIQueryMyDeliverability(string metric)
         {
             var client = _scenarioContext.Get<IClient>();
-            Response response = await client.Metrics.GetDeliverability(new
-                {
-                    from = DateTime.MinValue,
-                    metrics = metric
-                });
+            Response response = await client.Metrics.GetDeliverability(new { from = DateTime.MinValue, metrics = metric });
 
             _scenarioContext.Set(response);
         }
@@ -32,10 +28,7 @@ namespace SparkPost.Acceptance
         public async Task y()
         {
             var client = _scenarioContext.Get<IClient>();
-            Response response = await client.Metrics.GetBounceReasons(new
-                {
-                    from = DateTime.MinValue
-                });
+            Response response = await client.Metrics.GetBounceReasons(new { from = DateTime.MinValue });
 
             _scenarioContext.Set(response);
         }

@@ -1,59 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
+using SendTemplate;
+using SparkPost;
 
-namespace SparkPost.Examples
+var fromAddr = "from-csharp@yourdomain.com";
+var toAddr = "to@you.com";
+var apikey = "YOUR_API_KEY";
+
+var trans = new Transmission();
+
+var to = new Recipient
 {
-    internal class Order
-    {
-        public int OrderId { get; set; }
-        public string Desc { get; set; }
-        public int Total { get; set; }
-    }
+    Address = new Address { Email = toAddr },
+    SubstitutionData = new Dictionary<string, object> { { "firstName", "Jane" } }
+};
 
-    internal class SendTemplate
-    {
-        public static void Main(string[] args)
-        {
-            var settings = ConfigurationManager.AppSettings;
-            var fromAddr = settings["fromaddr"];
-            var toAddr = settings["toaddr"];
+trans.Recipients.Add(to);
+trans.SubstitutionData["title"] = "Dr";
+trans.SubstitutionData["firstName"] = "Rick";
+trans.SubstitutionData["lastName"] = "Sanchez";
+trans.SubstitutionData["orders"] = new List<Order> { new(101, "Tomatoes", 5), new(271, "Entropy", 314) };
 
-            var trans = new Transmission();
+trans.Content.From.Email = fromAddr;
+trans.Content.TemplateId = "orderSummary";
 
-            var to = new Recipient
-            {
-                Address = new Address
-                {
-                    Email = toAddr
-                },
-                SubstitutionData = new Dictionary<string, object>
-                {
-                    {"firstName", "Jane"}
-                }
-            };
+Console.Write("Sending mail...");
 
-            trans.Recipients.Add(to);
-            trans.SubstitutionData["title"] = "Dr";
-            trans.SubstitutionData["firstName"] = "Rick";
-            trans.SubstitutionData["lastName"] = "Sanchez";
-            trans.SubstitutionData["orders"] = new List<Order>
-            {
-                new Order {OrderId = 101, Desc = "Tomatoes", Total = 5},
-                new Order {OrderId = 271, Desc = "Entropy", Total = 314}
-            };
+var client = new Client(apikey);
 
-            trans.Content.From.Email = fromAddr;
-            trans.Content.TemplateId = "orderSummary";
+var response = await client.Transmissions.Send(trans);
 
-            Console.Write("Sending mail...");
-
-            var client = new Client(settings["apikey"]);
-            client.CustomSettings.SendingMode = SendingModes.Sync;
-
-            var response = client.Transmissions.Send(trans);
-
-            Console.WriteLine("done");
-        }
-    }
-}
+Console.WriteLine("done");

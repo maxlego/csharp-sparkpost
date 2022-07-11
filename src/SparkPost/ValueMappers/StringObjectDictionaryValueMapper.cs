@@ -21,7 +21,7 @@ namespace SparkPost.ValueMappers
 
         public object Map(Type propertyType, object value)
         {
-            var original = (IDictionary<string, object>) value;
+            var original = (IDictionary<string, object>)value;
             var dictionary = new Dictionary<string, object>();
             foreach (var item in original.Where(i => i.Value != null))
             {

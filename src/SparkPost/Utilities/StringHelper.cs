@@ -7,7 +7,7 @@ namespace SparkPost.Utilities
     {
         public static string[] SplitOn(this string value, string separator)
         {
-            return value.Split(new[] {separator}, StringSplitOptions.RemoveEmptyEntries);
+            return value.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         public static string JoinWith(this IEnumerable<string> value, string separator)

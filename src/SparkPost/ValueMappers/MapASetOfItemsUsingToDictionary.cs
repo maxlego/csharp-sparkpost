@@ -20,9 +20,10 @@ namespace SparkPost.ValueMappers
 
         public bool CanMap(Type propertyType, object value)
         {
-            return value != null && propertyType.Name.EndsWith("List`1") &&
-                   propertyType.GetGenericArguments().Count() == 1 &&
-                   converters.ContainsKey(propertyType.GetGenericArguments().First());
+            return value != null
+                && propertyType.Name.EndsWith("List`1")
+                && propertyType.GetGenericArguments().Count() == 1
+                && converters.ContainsKey(propertyType.GetGenericArguments().First());
         }
 
         public object Map(Type propertyType, object value)
@@ -32,8 +33,7 @@ namespace SparkPost.ValueMappers
             var list = (value as IEnumerable<object>).ToList();
 
             if (list.Any())
-                value = list.Select(x => converter.Invoke(dataMapper, BindingFlags.Default, null,
-                    new[] {x}, CultureInfo.CurrentCulture)).ToList();
+                value = list.Select(x => converter.Invoke(dataMapper, BindingFlags.Default, null, new[] { x }, CultureInfo.CurrentCulture)).ToList();
             else
                 value = null;
 

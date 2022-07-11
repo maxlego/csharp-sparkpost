@@ -6,8 +6,8 @@ namespace SparkPost
     {
         public ListMessageEventsResponse()
         {
-            MessageEvents = new MessageEvent[] {};
-            Links = new PageLink[] {};
+            MessageEvents = new MessageEvent[] { };
+            Links = new PageLink[] { };
         }
 
         public IEnumerable<MessageEvent> MessageEvents { get; set; }

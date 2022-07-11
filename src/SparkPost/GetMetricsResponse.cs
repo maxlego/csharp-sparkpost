@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SparkPost
 {
-    public class GetMetricsResponse: Response
+    public class GetMetricsResponse : Response
     {
         public IList<IDictionary<string, object>> Results { get; set; }
 

@@ -1,6 +1,4 @@
 ﻿namespace SparkPost
 {
-    public class InlineImage : File
-    {
-    }
+    public class InlineImage : File { }
 }

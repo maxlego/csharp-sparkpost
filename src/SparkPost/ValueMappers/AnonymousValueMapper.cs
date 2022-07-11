@@ -27,8 +27,7 @@ namespace SparkPost.ValueMappers
 
         private static bool ThisIsAnAnonymousType(object value)
         {
-            return value != null &&
-                   (value.GetType().Name.Contains("AnonymousType") || value.GetType().Name.Contains("AnonType"));
+            return value != null && (value.GetType().Name.Contains("AnonymousType") || value.GetType().Name.Contains("AnonType"));
         }
     }
 }

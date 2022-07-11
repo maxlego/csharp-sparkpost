@@ -67,7 +67,8 @@ namespace SparkPost
         {
             get
             {
-                return new List<string>() {
+                return new List<string>()
+                {
                     Injected,
                     Bounce,
                     Rejected,
@@ -107,15 +108,7 @@ namespace SparkPost
         /// </summary>
         public static IList<string> AllBounce
         {
-            get
-            {
-                return new List<string>()
-                {
-                    Bounce,
-                    InBandBounce,
-                    OutOfBandBounce
-                };
-            }
+            get { return new List<string>() { Bounce, InBandBounce, OutOfBandBounce }; }
         }
 
         /// <summary>
@@ -123,14 +116,7 @@ namespace SparkPost
         /// </summary>
         public static IList<string> AllEngagement
         {
-            get
-            {
-                return new List<string>()
-                {
-                    Clicked,
-                    RawClicked
-                };
-            }
+            get { return new List<string>() { Clicked, RawClicked }; }
         }
-    }    
+    }
 }

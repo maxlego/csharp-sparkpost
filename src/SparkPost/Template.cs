@@ -13,7 +13,6 @@ namespace SparkPost
 
         public TemplateContent Content { get; set; }
         public TemplateOptions Options { get; set; }
-
     }
 
     public class TemplateListItem : TemplateBase

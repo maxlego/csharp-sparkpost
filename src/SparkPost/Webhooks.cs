@@ -27,7 +27,8 @@ namespace SparkPost
 
         public async Task<ListWebhookResponse> List(object query = null)
         {
-            if (query == null) query = new {};
+            if (query == null)
+                query = new { };
             var request = new Request
             {
                 Url = $"/api/{client.Version}/webhooks",
@@ -36,21 +37,19 @@ namespace SparkPost
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             return ListWebhookResponse.CreateFromResponse(response);
         }
 
         public async Task<RetrieveWebhookResponse> Retrieve(string id)
         {
-            var request = new Request
-            {
-                Url = $"/api/{client.Version}/webhooks/{id}",
-                Method = "GET"
-            };
+            var request = new Request { Url = $"/api/{client.Version}/webhooks/{id}", Method = "GET" };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             return RetrieveWebhookResponse.CreateFromResponse(response);
         }
@@ -65,7 +64,8 @@ namespace SparkPost
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var updateSuppressionResponse = new Response();
             LeftRight.SetValuesToMatch(updateSuppressionResponse, response);
@@ -74,11 +74,7 @@ namespace SparkPost
 
         public async Task<bool> Delete(string id)
         {
-            var request = new Request
-            {
-                Url = $"/api/{client.Version}/webhooks/{id}",
-                Method = "DELETE"
-            };
+            var request = new Request { Url = $"/api/{client.Version}/webhooks/{id}", Method = "DELETE" };
 
             var response = await requestSender.Send(request);
             return response.StatusCode == HttpStatusCode.NoContent;

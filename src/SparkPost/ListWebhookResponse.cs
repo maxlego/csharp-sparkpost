@@ -14,7 +14,7 @@ namespace SparkPost
 
             var results = Jsonification.DeserializeObject<dynamic>(result.Content).results;
             var webhooks = new List<Webhook>();
-            foreach(var r in results)
+            foreach (var r in results)
                 webhooks.Add(ConvertToAWebhook(r));
 
             result.Webhooks = webhooks;

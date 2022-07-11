@@ -23,12 +23,13 @@
         /// <returns></returns>
         public static SendingDomain ConvertToSendingDomain(dynamic result)
         {
-            return result != null ? new SendingDomain
+            return result != null
+                ? new SendingDomain
                 {
                     Domain = result.domain,
                     TrackingDomain = result.tracking_domain,
                     Status = SendingDomainStatus.ConvertToSendingDomainStatus(result.status),
-                    Dkim = Dkim.ConvertToDkim(result.dkim),
+                    Dkim = SparkPost.Dkim.ConvertToDkim(result.dkim),
                     GenerateDkim = result.generate_dkim ?? false,
                     DkimKeyLength = result.dkim_key_length ?? 0,
                     SharedWithSubAccounts = result.shared_with_subaccounts ?? false

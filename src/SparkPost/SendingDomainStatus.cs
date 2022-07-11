@@ -23,23 +23,20 @@ namespace SparkPost
         /// <returns></returns>
         public static SendingDomainStatus ConvertToSendingDomainStatus(dynamic result)
         {
-            if (result == null) return null;
+            if (result == null)
+                return null;
             return new SendingDomainStatus
             {
                 OwnershipVerified = result.ownership_verified ?? false,
-                DkimStatus =
-                    Enum.Parse(typeof (DkimStatus), (result.dkim_status ?? DkimStatus.Unknowed).ToString(), true),
-                SpfStatus =
-                    Enum.Parse(typeof (SpfStatus), (result.spf_status ?? SpfStatus.Unknowed).ToString(), true),
-                AbuseAtStatus =
-                    Enum.Parse(typeof (AbuseAtStatus), (result.abuse_at_status ?? AbuseAtStatus.Unknowed).ToString(),
-                        true),
-                PostmasterAtStatus =
-                    Enum.Parse(typeof (PostmasterAtStatus),
-                        (result.postmaster_at_status ?? PostmasterAtStatus.Unknowed).ToString(), true),
-                ComplianceStatus =
-                    Enum.Parse(typeof (ComplianceStatus),
-                        (result.compliance_status ?? ComplianceStatus.Unknowed).ToString(), true)
+                DkimStatus = Enum.Parse(typeof(DkimStatus), (result.dkim_status ?? DkimStatus.Unknowed).ToString(), true),
+                SpfStatus = Enum.Parse(typeof(SpfStatus), (result.spf_status ?? SpfStatus.Unknowed).ToString(), true),
+                AbuseAtStatus = Enum.Parse(typeof(AbuseAtStatus), (result.abuse_at_status ?? AbuseAtStatus.Unknowed).ToString(), true),
+                PostmasterAtStatus = Enum.Parse(
+                    typeof(PostmasterAtStatus),
+                    (result.postmaster_at_status ?? PostmasterAtStatus.Unknowed).ToString(),
+                    true
+                ),
+                ComplianceStatus = Enum.Parse(typeof(ComplianceStatus), (result.compliance_status ?? ComplianceStatus.Unknowed).ToString(), true)
             };
         }
     }

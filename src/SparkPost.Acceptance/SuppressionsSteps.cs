@@ -29,7 +29,7 @@ namespace SparkPost.Acceptance
 
             var client = scenarioContext.Get<IClient>();
 
-            UpdateSuppressionResponse response =  await client.Suppressions.CreateOrUpdate(new [] {email});
+            UpdateSuppressionResponse response = await client.Suppressions.CreateOrUpdate(new[] { email });
 
             scenarioContext.Set(response);
             scenarioContext.Set<Response>(response);
@@ -46,7 +46,6 @@ namespace SparkPost.Acceptance
 
             response = await client.Suppressions.Retrieve(email);
             Assert.True(response.Suppressions.Any());
-
         }
     }
 }

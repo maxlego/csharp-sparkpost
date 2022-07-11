@@ -44,7 +44,9 @@ namespace SparkPost.Tests
             }
         }
 
+#pragma warning disable CA1001
         public class ParseTests
+#pragma warning restore CA1001
         {
             private MailMessage mailMessage;
             private Transmission transmission;

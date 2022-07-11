@@ -40,12 +40,6 @@ namespace SparkPost.Tests
             }
 
             [Fact]
-            public void It_should_default_to_async()
-            {
-                Assert.Equal(SendingModes.Async, client.CustomSettings.SendingMode);
-            }
-
-            [Fact]
             public void it_should_have_inbound_domains()
             {
                 Assert.NotNull(client.InboundDomains);
