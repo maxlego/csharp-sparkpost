@@ -2,7 +2,7 @@
 name: Build and Test
 
 on: [push]
-  
+
 jobs:
   build-and-run-tests:
     runs-on: ubuntu-latest
@@ -11,7 +11,8 @@ jobs:
       - uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 6.0.301
-      - name: build
-        run: dotnet build src/SparkPost.sln 
-      - name: Run Tests
-        run: dotnet test src/SparkPost.sln
+      - run: dotnet run -p build/build.csproj
+      - uses: actions/upload-artifact@v3
+        with:
+          name: SparkPost.nupkg
+          path: artifacts/*
