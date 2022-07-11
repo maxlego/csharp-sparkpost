@@ -61,7 +61,7 @@ Target(
     DependsOn(Build),
     () =>
     {
-        Run("dotnet", "test src/SparkPost.sln --no-restore --no-build");
+        Run("dotnet", "test src/SparkPost.sln");
     }
 );
 
