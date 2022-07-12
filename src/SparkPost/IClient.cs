@@ -1,4 +1,4 @@
-﻿namespace SparkPost
+namespace SparkPost
 {
     /// <summary>
     /// Provides access to the SparkPost API.
@@ -66,6 +66,11 @@
         /// Gets access to the metrics resource of the SparkPost API.
         /// </summary>
         IMetrics Metrics { get; }
+
+        /// <summary>
+        /// Gets access to the Email Recipient Validation resource of the SparkPost API.
+        /// </summary>
+        IRecipientValidation RecipientValidations { get; }
 
         /// <summary>
         /// Gets the API version supported by this client.
