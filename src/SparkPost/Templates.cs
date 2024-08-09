@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Net;
 using System.Reflection;
@@ -140,10 +140,7 @@ namespace SparkPost
 
         public async Task<TemplateContent> Preview(string templateId, IDictionary<string, object> substitutionData, bool? draft = null)
         {
-            var transmission = new Transmission
-            {
-                SubstitutionData = substitutionData
-            };
+            var transmission = new Transmission { SubstitutionData = substitutionData };
 
             var url = $"api/{client.Version}/templates/{templateId}/preview";
             if (draft.HasValue)
@@ -155,11 +152,12 @@ namespace SparkPost
             {
                 Url = url,
                 Method = "POST",
-                Data =  dataMapper.ToDictionary(transmission)
+                Data = dataMapper.ToDictionary(transmission)
             };
 
             var response = await requestSender.Send(request);
-            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new ResponseException(response);
 
             var results = Jsonification.DeserializeObject<dynamic>(response.Content).results;
 
@@ -174,11 +172,7 @@ namespace SparkPost
 
             return new TemplateContent
             {
-                From = new Address
-                {
-                    Email = results.from.email,
-                    Name = results.from.name
-                },
+                From = new Address { Email = results.from.email, Name = results.from.name },
                 Subject = results.subject,
                 ReplyTo = results.reply_to ?? null,
                 Text = results.text ?? null,

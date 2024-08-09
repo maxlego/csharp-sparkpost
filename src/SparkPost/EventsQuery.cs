@@ -1,24 +1,21 @@
-using SparkPost.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SparkPost
 {
-    [Obsolete("Deprecated in 2019")]
-    public class MessageEventsQuery
+    public class EventsQuery
     {
-        public MessageEventsQuery()
+        public EventsQuery()
         {
             this.Events = new List<string>();
             this.BounceClasses = new List<string>();
-            this.CampaignIds = new List<string>();
-            this.FriendlyFroms = new List<string>();
-            this.MessageIds = new List<string>();
+            this.Campaigns = new List<string>();
+            this.FromAddresses = new List<string>();
+            this.Messages = new List<string>();
             this.Recipients = new List<string>();
             this.Subaccounts = new List<string>();
-            this.TemplateIds = new List<string>();
-            this.TransmissionIds = new List<string>();
+            this.Templates = new List<string>();
+            this.Transmissions = new List<string>();
         }
 
         /// <summary>
@@ -29,9 +26,9 @@ namespace SparkPost
         public IList<string> BounceClasses { get; set; }
 
         /// <summary>
-        /// campaign_ids : ? : (optional, string, `Example Campaign Name`) ... Comma-delimited list of campaign ID's to search (i.e. campaign_id used during creation of a transmission).
+        /// campaigns : ? : (optional, string, `Example Campaign Name`) ... Comma-delimited list of campaign ID's to search (i.e. campaign_id used during creation of a transmission).
         /// </summary>
-        public IList<string> CampaignIds { get; set; }
+        public IList<string> Campaigns { get; set; }
 
         /// <summary>
         /// events : List : Comma-delimited list of event types to search. Defaults to all event types.
@@ -40,9 +37,9 @@ namespace SparkPost
         public IList<string> Events { get; set; }
 
         /// <summary>
-        /// friendly_froms : ? : (optional, list, `sender@mail.example.com`) ... Comma-delimited list of friendly_froms to search.
+        /// from_addresses : ? : (optional, list, `sender@mail.example.com`) ... Comma-delimited list of friendly_froms to search.
         /// </summary>
-        public IList<string> FriendlyFroms { get; set; }
+        public IList<string> FromAddresses { get; set; }
 
         /// <summary>
         /// from : Datetime : Datetime in format of YYYY-MM-DDTHH:MM.
@@ -52,22 +49,23 @@ namespace SparkPost
         public DateTime? From { get; set; }
 
         /// <summary>
-        /// message_ids : List : Comma-delimited list of message ID's to search.
+        /// messages : List : Comma-delimited list of message ID's to search.
         /// Example: 0e0d94b7-9085-4e3c-ab30-e3f2cd9c273e.
         /// </summary>
-        public IList<string> MessageIds { get; set; }
+        public IList<string> Messages { get; set; }
 
         /// <summary>
-        /// page : number : The results page number to return. Used with per_page for paging through results.
-        /// Example: 25.
-        /// Default: 1.
+        /// cursor : String : Results cursor for pagination. Used in conjunction with per_page parameter. See Pagination section for details.
+        /// Example: WycyMDE4LTExLTA1VDIyOjQ1OjM5LjAwMFonLCAnc3BjLTM4MTQ1MjY3MjMyNTA2NTEwJ10=.
+        /// Default: initial.
         /// </summary>
-        public int? Page { get; set; }
+        public string Cursor { get; set; }
 
         /// <summary>
-        /// per_page : Number : Number of results to return per page. Must be between 1 and 10,000 (inclusive).
-        /// Example: 100.
+        /// per_page : Number : Maximum number of results to return per page. Must be between 1 and 10,000.
+        /// Example: 5000.
         /// Default: 1000.
+        /// Note: Pagination requests count towards the number of requests allowed by rate limiting, the same as non-paginated requests.
         /// </summary>
         public int? PerPage { get; set; }
 
@@ -90,10 +88,10 @@ namespace SparkPost
         public IList<string> Subaccounts { get; set; }
 
         /// <summary>
-        /// template_ids : List : Comma-delimited list of template ID's to search.
+        /// templates : List : Comma-delimited list of template ID's to search.
         /// Example: templ-1234.
         /// </summary>
-        public IList<string> TemplateIds { get; set; }
+        public IList<string> Templates { get; set; }
 
         /// <summary>
         /// timezone : String : Standard timezone identification string.
@@ -113,6 +111,6 @@ namespace SparkPost
         /// transmission_ids : List : Comma-delimited list of transmission ID's to search (i.e. id generated during creation of a transmission).
         /// Example: 65832150921904138.
         /// </summary>
-        public IList<string> TransmissionIds { get; set; }
+        public IList<string> Transmissions { get; set; }
     }
 }

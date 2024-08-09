@@ -1,4 +1,4 @@
-﻿namespace SparkPost
+namespace SparkPost
 {
     // The list was taken from:
     // https://support.sparkpost.com/customer/portal/articles/1929896
@@ -65,6 +65,13 @@
         /// Category: Admin.
         /// </summary>
         AdminFailure = 25,
+
+        /// <summary>
+        /// Smart Send Suppression
+        /// The message was suppressed by Smart Send policy.
+        /// Category: Admin.
+        /// </summary>
+        SmartSendSuppression = 26,
 
         /// <summary>
         /// Generic Bounce: No RCPT

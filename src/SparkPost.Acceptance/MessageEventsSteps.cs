@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+using System;
+using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace SparkPost.Acceptance
@@ -13,6 +14,7 @@ namespace SparkPost.Acceptance
             _scenarioContext = scenarioContext;
         }
 
+        [Obsolete()]
         [When(@"I ask for samples of '(.*)'")]
         public async Task WhenIAskForSamplesOf(string events)
         {

@@ -1,3 +1,5 @@
+using System;
+
 namespace SparkPost
 {
     /// <summary>
@@ -38,7 +40,13 @@ namespace SparkPost
         /// <summary>
         /// Gets access to the message events resource of the SparkPost API.
         /// </summary>
+        [Obsolete("Deprecated since 2019")]
         IMessageEvents MessageEvents { get; }
+
+        /// <summary>
+        /// Gets access to the events resource of the SparkPost API.
+        /// </summary>
+        IEvents Events { get; }
 
         /// <summary>
         /// Gets access to the inbound domains resource of the SparkPost API.
@@ -86,7 +94,5 @@ namespace SparkPost
         /// Gets the sub account.
         /// </summary>
         long SubaccountId { get; }
-
-        Events Events { get; }
     }
 }

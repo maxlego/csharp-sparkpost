@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace SparkPost
 {
+    [Obsolete("Deprecated in 2019")]
     public class ListMessageEventsResponse : Response
     {
         public ListMessageEventsResponse()

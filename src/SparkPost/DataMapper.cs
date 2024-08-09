@@ -1,9 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using SparkPost.Utilities;
 using SparkPost.ValueMappers;
 
@@ -26,6 +25,7 @@ namespace SparkPost
         IDictionary<string, object> ToDictionary(Suppression suppression);
         IDictionary<string, object> ToDictionary(Webhook webhook);
         IDictionary<string, object> ToDictionary(Subaccount subaccount);
+        IDictionary<string, object> ToDictionary(EventsQuery eventsQuery);
         IDictionary<string, object> ToDictionary(RelayWebhook relayWebhook);
         IDictionary<string, object> ToDictionary(InboundDomain inboundDomain);
         IDictionary<string, object> ToDictionary(RelayWebhookMatch relayWebhookMatch);
@@ -177,6 +177,27 @@ namespace SparkPost
             return WithCommonConventions(relayWebhookMatch);
         }
 
+        public IDictionary<string, object> ToDictionary(EventsQuery query)
+        {
+            return WithCommonConventions(
+                query,
+                new Dictionary<string, object>()
+                {
+                    ["events"] = string.Join(",", query.Events),
+                    ["campaigns"] = string.Join(",", query.Campaigns),
+                    ["bounce_classes"] = string.Join(",", query.BounceClasses),
+                    ["campaigns"] = string.Join(",", query.Campaigns),
+                    ["from_addresses"] = string.Join(",", query.FromAddresses),
+                    ["messages"] = string.Join(",", query.Messages),
+                    ["recipients"] = string.Join(",", query.Recipients),
+                    ["subaccounts"] = string.Join(",", query.Subaccounts),
+                    ["templates"] = string.Join(",", query.Templates),
+                    ["transmissions"] = string.Join(",", query.Transmissions)
+                }
+            );
+        }
+
+        [Obsolete("Deprecated in 2019")]
         public IDictionary<string, object> ToDictionary(MessageEventsQuery query)
         {
             return WithCommonConventions(
