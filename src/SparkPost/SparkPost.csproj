@@ -1,18 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
-    <Version>1.14.0.4</Version>
+    <Version>1.14.0.5</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>SparkPost.NetCore</PackageId>
     <Description>Lean Sparkpost API client port to .net standard 2.0</Description>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/maxlego/csharp-sparkpost</PackageProjectUrl>
     <RepositoryUrl>https://github.com/maxlego/csharp-sparkpost</RepositoryUrl>
-    <PackageIcon>sparkpost-net-core-compact.png</PackageIcon>
+    <PackageIcon>sparkpost-net-core.png</PackageIcon>
     <PackageIconUrl />
     <PackageReleaseNotes>Added template preview functionality</PackageReleaseNotes>
   </PropertyGroup>
@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\sparkpost-net-core-compact.png">
+    <None Include="..\..\sparkpost-net-core.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
