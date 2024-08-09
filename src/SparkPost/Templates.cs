@@ -4,6 +4,7 @@ using System.Net;
 using System.Reflection;
 using Newtonsoft.Json;
 using SparkPost.RequestSenders;
+using SparkPost.Utilities;
 
 namespace SparkPost
 {
@@ -135,6 +136,55 @@ namespace SparkPost
 
             var response = await requestSender.Send(request);
             return response.StatusCode == HttpStatusCode.OK;
+        }
+
+        public async Task<TemplateContent> Preview(string templateId, IDictionary<string, object> substitutionData, bool? draft = null)
+        {
+            var transmission = new Transmission
+            {
+                SubstitutionData = substitutionData
+            };
+
+            var url = $"api/{client.Version}/templates/{templateId}/preview";
+            if (draft.HasValue)
+            {
+                url += $"?draft={draft.ToString().ToLower()}";
+            }
+
+            var request = new Request
+            {
+                Url = url,
+                Method = "POST",
+                Data =  dataMapper.ToDictionary(transmission)
+            };
+
+            var response = await requestSender.Send(request);
+            if (response.StatusCode != HttpStatusCode.OK) throw new ResponseException(response);
+
+            var results = Jsonification.DeserializeObject<dynamic>(response.Content).results;
+
+            Dictionary<string, string> Headers = new Dictionary<string, string>();
+            if (results.headers != null)
+            {
+                foreach (var property in results.headers.GetType().GetProperties())
+                {
+                    Headers[property.Name] = (string)property.GetValue(results.headers);
+                }
+            }
+
+            return new TemplateContent
+            {
+                From = new Address
+                {
+                    Email = results.from.email,
+                    Name = results.from.name
+                },
+                Subject = results.subject,
+                ReplyTo = results.reply_to ?? null,
+                Text = results.text ?? null,
+                Html = results.html ?? null,
+                Headers = Headers
+            };
         }
     }
 }

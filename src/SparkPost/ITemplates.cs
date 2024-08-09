@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SparkPost
 {
@@ -25,5 +26,7 @@ namespace SparkPost
         Task<RetrieveTemplatesResponse> List();
 
         Task<bool> Delete(string templateId);
+
+        Task<TemplateContent> Preview(string templateId, IDictionary<string, object> substitutionData, bool? draft = null);
     }
 }
