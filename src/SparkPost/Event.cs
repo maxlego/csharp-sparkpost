@@ -1,12 +1,11 @@
 using SparkPost.Utilities;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System;
 
 namespace SparkPost
 {
-    [Obsolete("Deprecated in 2019")]
-    public class MessageEvent
+    public class Event
     {
         /// <summary>
         /// "type": {
@@ -20,18 +19,18 @@ namespace SparkPost
         /// <summary>
         /// Type of event this record describes
         /// </summary>
-        public MessageEventType TypeEnum
+        public EventType TypeEnum
         {
             get
             {
-                foreach (var typeName in Enum.GetNames(typeof(MessageEventType)))
+                foreach (var typeName in Enum.GetNames(typeof(EventType)))
                 {
                     var typeNameSnakeCase = SnakeCase.Convert(typeName);
                     if (string.Equals(Type, typeNameSnakeCase, StringComparison.InvariantCultureIgnoreCase))
                         // check for an unmapped message event type here
-                        return (MessageEventType)Enum.Parse(typeof(MessageEventType), typeName);
+                        return (EventType)Enum.Parse(typeof(EventType), typeName);
                 }
-                return MessageEventType.Undefined;
+                return EventType.Undefined;
             }
         }
 
@@ -134,14 +133,6 @@ namespace SparkPost
         /// "msg_from": "msprvs1=17827RA6TC8Pz=bounces-12345@sparkpostmail1.com",
         /// </summary>
         public string MessageFrom { get; set; }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use MessageEvent.MessageFrom.")]
-        public string MessageForm
-        {
-            get { return MessageFrom; }
-            set { MessageFrom = value; }
-        }
 
         /// <summary>
         /// "msg_size": {
@@ -311,12 +302,6 @@ namespace SparkPost
         /// "sending_ip": "shared",
         /// </summary>
         public string SendingIp { get; set; }
-
-        /// <summary>
-        /// Not documented.
-        /// "tdate": "2016-04-27T22:05:40.000Z",
-        /// </summary>
-        public DateTime TDate { get; set; }
 
         /// <summary>
         /// Not documented.

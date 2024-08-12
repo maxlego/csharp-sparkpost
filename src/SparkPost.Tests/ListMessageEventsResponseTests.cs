@@ -1,7 +1,9 @@
-﻿using Xunit;
+using System;
+using Xunit;
 
 namespace SparkPost.Tests
 {
+    [Obsolete]
     public class ListMessageEventsResponseTests
     {
         public class DefaultTests

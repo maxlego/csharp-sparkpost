@@ -30,7 +30,6 @@ namespace SparkPost
             Suppressions = new Suppressions(this, requestSender, dataMapper);
             Webhooks = new Webhooks(this, requestSender, dataMapper);
             Subaccounts = new Subaccounts(this, requestSender, dataMapper);
-            MessageEvents = new MessageEvents(this, requestSender);
             InboundDomains = new InboundDomains(this, requestSender, dataMapper);
             RelayWebhooks = new RelayWebhooks(this, requestSender, dataMapper);
             RecipientValidations = new RecipientValidation(this, requestSender);
@@ -39,6 +38,10 @@ namespace SparkPost
             Metrics = new Metrics(this, requestSender);
             Events = new Events(this, requestSender);
             CustomSettings = new Settings();
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            MessageEvents = new MessageEvents(this, requestSender);
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         public string ApiKey { get; set; }
@@ -50,7 +53,7 @@ namespace SparkPost
         public ISuppressions Suppressions { get; }
         public IWebhooks Webhooks { get; }
         public ISubaccounts Subaccounts { get; }
-        public IMessageEvents MessageEvents { get; }
+        public IEvents Events { get; }
         public IInboundDomains InboundDomains { get; }
         public IRelayWebhooks RelayWebhooks { get; }
         public IRecipientLists RecipientLists { get; }
@@ -59,7 +62,10 @@ namespace SparkPost
 
         public IRecipientValidation RecipientValidations { get; }
 
-        public Events Events { get; }
+#pragma warning disable CS0618 // Type or member is obsolete
+        public IMessageEvents MessageEvents { get; }
+#pragma warning restore CS0618 // Type or member is obsolete
+
         public string Version => "v1";
 
         public Settings CustomSettings { get; }
